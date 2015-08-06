@@ -1,0 +1,44 @@
+#is.na()
+a=0/0
+b=NA
+c=c(a,b)
+is.na(c)
+
+#paste()
+d1=letters
+d2=LETTERS
+d3=month.abb
+d4=month.name
+d5=pi
+d=paste(d1,d2,sep='^')
+
+
+#time
+Sys.time()
+Sys.time()-2
+Sys.Date()
+Sys.Date()-1
+system.time()#函数运行时间
+proc.time()#proc.time() 可以获得R 进程存在的时间，system.time() 通过调用两次proc.time()来计算函数运行的时间
+x <- rnorm(1e7)
+system.time(x1 <- sort(x, method = "shell"))
+system.time(x2 <- sort(x, method = "quick"))
+
+#attributes()
+attributes(d)
+
+#sort()/order()/ordered()
+e=c(seq(1,-10,by=-2),seq(1,3,length=3),rep(c(1,2,3),each=2),rep((1:4),times=2));e
+sort(e,dec=T)
+order(e)
+ordered(e)
+print(e)
+
+#tapply
+tapply(vector,factor,function)---tapply(X,Index,FUN)
+f=c(sample(1:50,10))
+f=as.vector(f)
+g=as.factor(c(rep(sample(LETTERS,5),times=2)))
+tapply(f,g,median)
+
+#
