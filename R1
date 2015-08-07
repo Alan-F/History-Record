@@ -85,3 +85,67 @@ qr(o)
 
 #cut
 cut()
+
+#hist/density/rug
+p=c(sample(1:1000,50,replace=T))
+p
+hist(p)
+hist(p,seq(0,1000,100),prob=T) #the second arguement is breaks
+lines(density(p,bw='nrd0',adjust=1.2)) 
+#About density()---http://www.lifelaf.com/blog/?p=723
+rug(p) #show the actual data points
+
+#ecdf
+plot(ecdf(p),do.point=F,verticals=T)
+q=seq(min(p),max(p),length=50)
+lines(q,pnorm(q,mean=mean(p),sd=sd(p)),col=3)
+
+#ABOUT qqplot
+#总的来说都是比较现有未知分布的一维数据与已存在的分布或另一组未知分布的数据是否相同。主要的方法有：
+#1.观察pdf：即通过hist(),density(),KDE核密度估计,画出现有数据的pdf与假设分布进行比较。
+#2.观察cdf：即使用ecdf()。
+#3.qqplot:从quantile角度来看，若图像呈现y=x线性则同分布。qqnorm为特殊情况
+#4.Shapiro-Wilk test：shapiro.test()只针对正态分布,但不需要具体参数值。
+#5.ks.test：需要具体参数值，可对两组未知数据检验是否同分布。
+par(pty='s') # arrange for a square figure region
+qqnorm(p)#只适用数据是否符合正态分布鉴定
+qqline(p)
+
+r=rexp(5,3);r2=rnorm(500)#r2为要探索其分布是否为e指数分布的数据，r为满足exp分布的数据
+layout(matrix(c(1,2),1,2,byrow=T))
+layout.show(2)
+hist(r,seq(min(r),max(r),length=100),prob=T);lines(density(r,bw='SJ'),col='red')
+hist(r2,seq(min(r2),max(r2),length=100),prob=T);lines(density(r2,bw='SJ'),col='red')
+
+layout(matrix(c(1),1,1))
+r3=seq(min(r2),max(r2),length=500)
+plot(ecdf(r2),do.point=F,verticals=F)
+lines(r3,pt(r3,df=3),col=2)
+
+r4=rexp(500,3)
+qqplot(r,r2)
+
+shapiro.test(r)
+
+ks.test(r, "pnorm", mean = mean(r), sd = sqrt(var(r)))
+
+#Testify distributions of two samples
+s=c(79.98, 80.04, 80.02, 80.04, 80.03,80.03,80.04,79.97,80.05, 80.03, 80.02,80.00,80.02)
+t=c(80.02, 79.94, 79.98, 79.97, 79.97, 80.03, 79.95, 79.97)
+boxplot(s,t)
+#
+#All these tests assume normality of the two samples
+#unpaired t-test->the equality of the means
+t.test(s,t)
+#F test->equality in the variances
+var.test(s,t)
+#classical t-test
+t.test(s, t, var.equal=TRUE)
+#
+#Do not assume normality
+#Wilcoxon (or Mann-Whitney) test<-only assumes a common continuous distribution under the null hypothesis
+wilcox.test(s,t)
+#
+plot(ecdf(s), do.points=FALSE, verticals=TRUE, xlim=range(s, t))
+plot(ecdf(t), do.points=FALSE, verticals=TRUE, add=TRUE)
+ks.test(s,t)
