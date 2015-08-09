@@ -202,3 +202,13 @@ legend(locator(),legend=levels(iris[,5]))
 
 #locator()/identify()
 identify(iris[,1],iris[,2],labels=iris[,5])
+
+#par()
+par(c('lwd','col'))
+par(lwd=1,col="black")
+par(mfcol=c(3,2))
+par(mfrow=c(1,1))
+
+#weighted regression
+#other nonlinear regression and nonparamatic regression
+
