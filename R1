@@ -90,7 +90,7 @@ cut()
 p=c(sample(1:1000,50,replace=T))
 p
 hist(p)
-hist(p,seq(0,1000,100),prob=T) #the second arguement is breaks
+hist(p,seq(0,1000,100),prob=T) #the second arguement is breaks or can be nclass=n
 lines(density(p,bw='nrd0',adjust=1.2)) 
 #About density()---http://www.lifelaf.com/blog/?p=723
 rug(p) #show the actual data points
@@ -149,3 +149,56 @@ wilcox.test(s,t)
 plot(ecdf(s), do.points=FALSE, verticals=TRUE, xlim=range(s, t))
 plot(ecdf(t), do.points=FALSE, verticals=TRUE, add=TRUE)
 ks.test(s,t)
+
+#About &和&&
+#对于vector：u=c(1,2,3,4,5);which(u>1&u<3);which(u>1&&u<3)
+#对于多值判断：&&遇到False即返回False，节省时间
+
+#split--弱化版的tapply()
+n <- 10; nn <- 100
+g <- factor(round(n * runif(n * nn)))
+x <- rnorm(n * nn) + sqrt(as.numeric(g))
+g
+x
+xg <- split(x, g)
+xg
+
+#define a binary operations
+#"%!%"<-function(x,y)
+
+#nonlinear regression model
+#glm()--family=gaussian/binomial/poisson/quasi
+#nlm()/nls()
+
+#coplot
+windows(2)
+u=sample(1:10,30,replace=T)
+u2=sample(1:100,30,replace=T)
+u3=u2=sample(1:1000,30,replace=T)
+v=as.factor(c(rep(1:5,each=6)))
+split(u,v)
+coplot(u~u2|v,type='s')
+plot(1:5,1:5,type='S')
+
+#dotchart
+dotchart(sort(u2),sort(u))
+
+#plot 3 variables
+image(1:30,1:30,outer(u3,u,"/"))#the 1st and 2nd arguements are sequential;the third must be matrix
+contour(1:30,2:31,outer(u3,u2,"+"))
+persp(1:30,2:31,outer(u3,u2,"+"))
+
+#text
+data(iris)
+View(iris)
+tapply(iris$Sepal.Length,iris$Species,mean)
+plot(iris[,1],iris[,2],type='S')
+plot(iris[,1],iris[,2],type='h',col=as.numeric(iris[,5]))
+plot(iris[,1],iris[,2],type='p',col=as.numeric(iris[,5]))
+plot(iris[,1],iris[,2],type='n');text(iris[,1],iris[,2],abbreviate(iris[,5]))
+
+#legend
+legend(locator(),legend=levels(iris[,5]))
+
+#locator()/identify()
+identify(iris[,1],iris[,2],labels=iris[,5])
