@@ -237,10 +237,11 @@ to_number(EPARCHY_CODE_201505) as EPARCHY_CODE_201505
 ,to_number(USER_STATE_CODESET_20150531) as USER_STATE_CODESET_20150531
 ,to_number(USER_STATE_CODESET_20150515) as USER_STATE_CODESET_20150515
 ,to_number(USER_STATE_CODESET_20150430) as USER_STATE_CODESET_20150430
-,to_number(CZ_FEE_01_history) as CZ_FEE_01_history
-/*,to_number(CUR_INCOME_history) as CUR_INCOME_history
-,to_number(lost_tag_5_t2_4g) as lost_tag_5_t2_4g*/
+/*,to_number(CZ_FEE_01_history) as CZ_FEE_01_history
+,to_number(CUR_INCOME_history) as CUR_INCOME_history*/
 ,to_number(SMS_NUMS_history) as SMS_NUMS_history
+,to_number(lost_tag_5_t2_4g) as lost_tag_5_t2_4g
+
 from uni_05mth_all_4g_0910 where lost_tag_5_t2_4g!=-1);
 
 
