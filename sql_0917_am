@@ -1,3 +1,8 @@
+select count(*), LOST_TAG_5_T2_4G	 from ASIAINFO_MON_QX_5_4G_TEST  where (ROAM_STREAM_02_201502>=0.8*ROAM_STREAM_01_201502 and ROAM_STREAM_02_201503>=0.8*ROAM_STREAM_01_201503 and ROAM_STREAM_02_201504>=ROAM_STREAM_01_201504 and ROAM_STREAM_02_201505>=ROAM_STREAM_01_201505) group by	LOST_TAG_5_T2_4G	;
+
+select count(*),ROAM_STREAM_04_201502	,	ROAM_STREAM_04_201503	,	ROAM_STREAM_04_201504	,	ROAM_STREAM_04_201505	,	LOST_TAG_5_T2_4G	from ASIAINFO_MON_QX_5_4G_TEST group by		ROAM_STREAM_04_201502	,	ROAM_STREAM_04_201503	,	ROAM_STREAM_04_201504	,	ROAM_STREAM_04_201505	,	LOST_TAG_5_T2_4G		;
+
+*****************************************************************************************************************************
 alter table asiainfo_mon_qx_5_4g_test add LOST_TAG_5_T2_4G NUMBER;
 update asiainfo_mon_qx_5_4g_test set LOST_TAG_5_T2_4G=-1;
 
