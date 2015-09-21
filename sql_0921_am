@@ -34,3 +34,66 @@ total_use_stream_20150501+total_use_stream_20150502+total_use_stream_20150503+to
 and roam_stream_01_201505>=roam_stream_02_201505 and roam_stream_01_201506>=roam_stream_02_201506
 )
 GROUP BY LOST_TAG_6_T2_4G;
+
+
+
+
+
+update asiainfo_mon_qx_6_4g_test set lost_tag_6_t2_4g=-1;
+update asiainfo_mon_qx_6_4g_test set lost_tag_6_t2_4g=0 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=0)or
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=2 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=0);
+
+update asiainfo_mon_qx_6_4g_test set lost_tag_6_t2_4g=1 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=1) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=1) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=1)or
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=2 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+
+LOST_TAG_201508=1);
