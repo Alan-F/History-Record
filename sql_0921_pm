@@ -1,0 +1,70 @@
+#1
+select count(*),  LOST_TAG_5_T2_4G FROM ASIAINFO_MON_QX_5_4G_TEST , asiainfo_call_times_qx_5_4g
+WHERE asiainfo_mon_qx_5_4g_test.user_id=asiainfo_call_times_qx_5_4g.user_id and
+(
+10*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405)
+and
+10*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+<=
+(call_times_20150301+call_times_20150502+call_times_20150303+call_times_20150304+call_times_20150305)
+
+)
+GROUP BY LOST_TAG_5_T2_4G;
+
+
+select count(*),  LOST_TAG_6_T2_4G FROM ASIAINFO_MON_QX_6_4G_TEST , asiainfo_call_times_qx_6_4g
+WHERE asiainfo_mon_qx_6_4g_test.user_id=asiainfo_call_times_qx_6_4g.user_id and
+(
+10*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405)
+and
+10*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605)
+<=
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+
+)
+GROUP BY LOST_TAG_6_T2_4G;
+
+
+
+
+
+
+
+#2
+select count(*),  LOST_TAG_5_T2_4G FROM ASIAINFO_MON_QX_5_4G_TEST , asiainfo_call_times_qx_5_4g
+WHERE asiainfo_mon_qx_5_4g_test.user_id=asiainfo_call_times_qx_5_4g.user_id and
+(
+5*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505+call_times_20150506+call_times_20150507+call_times_20150508+call_times_20150509+call_times_20150510)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405+call_times_20150406+call_times_20150407+call_times_20150408+call_times_20150409+call_times_20150410)
+and
+(call_times_20150301+call_times_20150302+call_times_20150303+call_times_20150304+call_times_20150305+call_times_20150306+call_times_20150307+call_times_20150308+call_times_20150309+call_times_20150310)
+>=
+5*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505+call_times_20150506+call_times_20150507+call_times_20150508+call_times_20150509+call_times_20150510)
+)
+GROUP BY LOST_TAG_5_T2_4G;
+
+
+select count(*),  LOST_TAG_6_T2_4G FROM ASIAINFO_MON_QX_6_4G_TEST , asiainfo_call_times_qx_6_4g
+WHERE asiainfo_mon_qx_6_4g_test.user_id=asiainfo_call_times_qx_6_4g.user_id and
+(
+5*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605+call_times_20150606+call_times_20150607+call_times_20150608+call_times_20150609+call_times_20150610)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405+call_times_20150406+call_times_20150407+call_times_20150408+call_times_20150409+call_times_20150410)
+and
+5*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605+call_times_20150606+call_times_20150607+call_times_20150608+call_times_20150609+call_times_20150610)
+<=
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505+call_times_20150506+call_times_20150507+call_times_20150508+call_times_20150509+call_times_20150510)
+
+)
+GROUP BY LOST_TAG_6_T2_4G;
+
+
+
+
+
+#3
