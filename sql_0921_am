@@ -16,7 +16,7 @@ and total_use_stream_20150521+total_use_stream_20150522+total_use_stream_2015052
 )
 GROUP BY LOST_TAG_6_T2_4G;
 
-
+******************************************************
 
 
 select count(*),  LOST_TAG_5_T2_4G FROM ASIAINFO_MON_QX_5_4G_TEST , asiainfo_totalusestream_qx5_4g 
