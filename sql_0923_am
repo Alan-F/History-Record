@@ -218,3 +218,44 @@ and
 )
 
 GROUP BY LOST_TAG_6_T2_4G;
+
+#11
+select count(*),  LOST_TAG_5_T2_4G 
+FROM ASIAINFO_MON_QX_5_4G_TEST , asiainfo_call_times_qx_5_4g
+WHERE asiainfo_mon_qx_5_4g_test.user_id=asiainfo_call_times_qx_5_4g.user_id 
+and
+(
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405
++call_times_20150426+call_times_20150427+call_times_20150428+call_times_20150429+call_times_20150430
+)
+>=5*
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505
++call_times_20150527+call_times_20150528+call_times_20150529+call_times_20150530+call_times_20150531)
+
+and
+BILL_DURATION_01_201504>=5*BILL_DURATION_01_201505
+
+)
+GROUP BY LOST_TAG_5_T2_4G;
+
+
+select count(*),  LOST_TAG_6_T2_4G 
+FROM ASIAINFO_MON_QX_6_4G_TEST , asiainfo_call_times_qx_6_4g, asiainfo_sms_nums_qx_6_4g,asiainfo_totalusestream_qx6_4g
+WHERE asiainfo_mon_qx_6_4g_test.user_id=asiainfo_call_times_qx_6_4g.user_id 
+and asiainfo_mon_qx_6_4g_test.user_id=asiainfo_sms_nums_qx_6_4g.user_id
+and asiainfo_mon_qx_6_4g_test.user_id=asiainfo_totalusestream_qx6_4g.user_id 
+and
+(
+5*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605
++call_times_20150625+call_times_20150626+call_times_20150627+call_times_20150628+call_times_20150629
+)
+<=
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505
++call_times_20150527+call_times_20150528+call_times_20150529+call_times_20150530+call_times_20150531)
+
+and
+BILL_DURATION_01_201505>=5*BILL_DURATION_01_201506
+
+)
+
+GROUP BY LOST_TAG_6_T2_4G;
