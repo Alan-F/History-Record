@@ -1,0 +1,770 @@
+create table uni_05mth_all_4g_0929 as (select
+ASIAINFO_MON_QX_5_4G.USER_ID,
+(ASIAINFO_MON_QX_5_4G.USER_ID-mod(ASIAINFO_MON_QX_5_4G.USER_ID,10))/10 as ID_1,
+mod(ASIAINFO_MON_QX_5_4G.USER_ID,10) as ID_2,
+EPARCHY_CODE_201505,
+ACTION_END_DATE_201505,
+CREDIT_VALUE_201505,
+JOIN_MONTH_201505,
+VOICE_TAG_201505,
+ROAM_TAG_03_201505,
+MTC_NUM_201505,
+MTC_NUM_201504,
+MTC_NUM_201503,
+NO_LCALL_DURATION_201505,
+PROV_LCALL_DURATION_201505,
+NATIONAL_LCALL_DURATION_201505,
+INTERGAT_LCALL_DURATION_201505,
+NOINTERGATLCALLDURATION_201505,
+ROAM_CALL_DURATION_201505,
+BILL_DURATION_01_201505,
+BILL_DURATION_01_201504,
+CUR_INCOME_201505,
+CUR_INCOME_201504,
+CUR_INCOME_201503,
+PROM_FEE_201505,
+DEBT_FEE_201505,
+NOT_PACKAGE_USE_201505_201505,
+FREE_FLOW_USE_201502,
+FREE_FLOW_USE_201503,
+FREE_FLOW_USE_201504,
+FREE_FLOW_USE_201505,
+ROAM_STREAM_01_201502,
+ROAM_STREAM_01_201503,
+ROAM_STREAM_01_201504,
+ROAM_STREAM_01_201505,
+ROAM_STREAM_02_201502,
+ROAM_STREAM_02_201503,
+ROAM_STREAM_02_201504,
+ROAM_STREAM_02_201505,
+ROAM_STREAM_04_201505,
+VOICEOVER_TAG_201505,
+SMS_NUMS_201505,
+SMS_NUMS_201504,
+SMS_NUMS_201503,
+SMS_NUMS_201502,
+EPARCHY_TYPE_201505,
+CZ_FEE_01_201504,
+CZ_FEE_01_201505,
+CZ_FEE_01_201503,
+LOST_TAG_201502,
+LOST_TAG_201503,
+LOST_TAG_201504,
+LOST_TAG_201505,
+LOST_TAG_201506,
+LOST_TAG_201507,
+
+call_times_20150501,
+call_times_20150502,
+call_times_20150503,
+call_times_20150504,
+call_times_20150505,
+call_times_20150531,
+call_times_20150530,
+call_times_20150529,
+call_times_20150528,
+call_times_20150527,
+call_times_20150401,
+call_times_20150402,
+call_times_20150403,
+call_times_20150404,
+call_times_20150405,
+call_times_20150426,
+call_times_20150427,
+call_times_20150428,
+call_times_20150429,
+call_times_20150430,
+call_times_20150301,
+call_times_20150302,
+call_times_20150303,
+call_times_20150304,
+call_times_20150305,
+
+
+call_times_20150511,
+call_times_20150512,
+call_times_20150513,
+call_times_20150514,
+call_times_20150515,
+call_times_20150516,
+call_times_20150517,
+call_times_20150518,
+call_times_20150519,
+call_times_20150520,
+call_times_20150411,call_times_20150412,call_times_20150413,call_times_20150414,call_times_20150415,
+call_times_20150416,call_times_20150417,call_times_20150418,call_times_20150419,call_times_20150420,
+SMS_NUMS_20150511,SMS_NUMS_20150512,SMS_NUMS_20150513,SMS_NUMS_20150514,SMS_NUMS_20150515,
+SMS_NUMS_20150516,SMS_NUMS_20150517,SMS_NUMS_20150518,SMS_NUMS_20150519,SMS_NUMS_20150520,
+SMS_NUMS_20150411,SMS_NUMS_20150412,SMS_NUMS_20150413,SMS_NUMS_20150414,SMS_NUMS_20150415,
+SMS_NUMS_20150416,SMS_NUMS_20150417,SMS_NUMS_20150418,SMS_NUMS_20150419,SMS_NUMS_20150420,
+total_use_stream_20150511,total_use_stream_20150512,total_use_stream_20150513,total_use_stream_20150514,total_use_stream_20150515,
+total_use_stream_20150516,total_use_stream_20150517,total_use_stream_20150518,total_use_stream_20150519,total_use_stream_20150520,
+total_use_stream_20150411,total_use_stream_20150412,total_use_stream_20150413,total_use_stream_20150414,total_use_stream_20150415,
+total_use_stream_20150416,total_use_stream_20150417,total_use_stream_20150418,total_use_stream_20150419,total_use_stream_20150420,
+
+
+
+
+
+
+
+USER_STATE_CODESET_20150531,
+USER_STATE_CODESET_20150515,
+USER_STATE_CODESET_20150501
+from ASIAINFO_MON_QX_5_4G,
+ASIAINFO_USERSTCODESET_QX_4_4G,
+asiainfo_call_times_qx_5_4g,
+asiainfo_sms_nums_qx_5_4g, 
+asiainfo_totalusestream_qx5_4g
+where ASIAINFO_MON_QX_5_4G.user_id=ASIAINFO_USERSTCODESET_QX_4_4G.user_id
+and ASIAINFO_MON_QX_5_4G.user_id=asiainfo_call_times_qx_5_4g.user_id
+and ASIAINFO_MON_QX_5_4G.user_id=asiainfo_sms_nums_qx_5_4g.user_id
+and ASIAINFO_MON_QX_5_4G.user_id=asiainfo_totalusestream_qx5_4g.user_id
+);
+
+
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='3' where USER_STATE_CODESET_20150531='2';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='2' where USER_STATE_CODESET_20150531='4';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='4' where USER_STATE_CODESET_20150531='6';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='7' where USER_STATE_CODESET_20150531='7';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='5';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='6' where USER_STATE_CODESET_20150531='9';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='2' where USER_STATE_CODESET_20150531='A';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='3' where USER_STATE_CODESET_20150531='B';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='4' where USER_STATE_CODESET_20150531='F';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='2' where USER_STATE_CODESET_20150531='K';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='N';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='O';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='T';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='6' where USER_STATE_CODESET_20150531='U';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='X';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150531='5' where USER_STATE_CODESET_20150531='M';
+
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='3' where USER_STATE_CODESET_20150501='2';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='2' where USER_STATE_CODESET_20150501='4';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='4' where USER_STATE_CODESET_20150501='6';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='7' where USER_STATE_CODESET_20150501='7';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='5';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='6' where USER_STATE_CODESET_20150501='9';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='2' where USER_STATE_CODESET_20150501='A';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='3' where USER_STATE_CODESET_20150501='B';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='4' where USER_STATE_CODESET_20150501='F';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='2' where USER_STATE_CODESET_20150501='K';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='N';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='O';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='T';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='6' where USER_STATE_CODESET_20150501='U';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='X';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150501='5' where USER_STATE_CODESET_20150501='M';
+
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='3' where USER_STATE_CODESET_20150515='2';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='2' where USER_STATE_CODESET_20150515='4';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='4' where USER_STATE_CODESET_20150515='6';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='7' where USER_STATE_CODESET_20150515='7';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='5';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='6' where USER_STATE_CODESET_20150515='9';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='2' where USER_STATE_CODESET_20150515='A';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='3' where USER_STATE_CODESET_20150515='B';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='4' where USER_STATE_CODESET_20150515='F';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='2' where USER_STATE_CODESET_20150515='K';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='N';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='O';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='T';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='6' where USER_STATE_CODESET_20150515='U';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='X';
+update uni_05mth_all_4g_0929 set USER_STATE_CODESET_20150515='5' where USER_STATE_CODESET_20150515='M';
+
+/*alter table uni_05mth_all_4g_0929 add CZ_FEE_01_history  number;
+update uni_05mth_all_4g_0929 set  CZ_FEE_01_history=-1;
+update uni_05mth_all_4g_0929 set CZ_FEE_01_history=0 where
+(CZ_FEE_01_201504!=0 or
+CZ_FEE_01_201505!=0 or
+CZ_FEE_01_201503!=0);
+update uni_05mth_all_4g_0929 set CZ_FEE_01_history=1 where
+(CZ_FEE_01_201504=0 and
+CZ_FEE_01_201505=0 and
+CZ_FEE_01_201503=0);
+
+alter table uni_05mth_all_4g_0929 add CUR_INCOME_history  number;
+update uni_05mth_all_4g_0929 set  CUR_INCOME_history=-1;
+update uni_05mth_all_4g_0929 set CUR_INCOME_history=0 where
+(CUR_INCOME_201503<=CUR_INCOME_201504+CUR_INCOME_201505);
+update uni_05mth_all_4g_0929 set CUR_INCOME_history=1 where
+(CUR_INCOME_201503>CUR_INCOME_201504+CUR_INCOME_201505);
+
+
+alter table uni_05mth_all_4g_0929 add SMS_NUMS_history  number;
+update uni_05mth_all_4g_0929 set  SMS_NUMS_history=-1;
+update uni_05mth_all_4g_0929 set SMS_NUMS_history=0 where
+(SMS_NUMS_201504!=0 or
+SMS_NUMS_201505!=0 or
+(SMS_NUMS_201502=0 and SMS_NUMS_201503=0)
+);
+update uni_05mth_all_4g_0929 set SMS_NUMS_history=1 where
+(SMS_NUMS_201504=0 and
+SMS_NUMS_201505=0 and
+( SMS_NUMS_201502!=0 or SMS_NUMS_201503!=0));
+
+alter table uni_05mth_all_4g_0929 add call_times_mtc_nums_history  number;
+update uni_05mth_all_4g_0929 set call_times_mtc_nums_history=0;
+update uni_05mth_all_4g_0929 set call_times_mtc_nums_history=1 where
+(
+10*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405)
+and
+10*(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405)
+<=
+(call_times_20150301+call_times_20150502+call_times_20150303+call_times_20150304+call_times_20150305)
+and MTC_num_201505<=mtc_num_201504 and MTC_num_201505<=mtc_num_201503
+);
+
+alter table uni_05mth_all_4g_0929 add call_times_bill_duration  number;
+update uni_05mth_all_4g_0929 set call_times_bill_duration=0;
+update uni_05mth_all_4g_0929 set call_times_bill_duration=1 where
+((call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405
++call_times_20150426+call_times_20150427+call_times_20150428+call_times_20150429+call_times_20150430
+)
+>=5*
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505
++call_times_20150527+call_times_20150528+call_times_20150529+call_times_20150530+call_times_20150531)
+and
+BILL_DURATION_01_201504>=5*BILL_DURATION_01_201505
+);*/
+
+
+alter table uni_05mth_all_4g_0929 add call_sms_stream  number;
+update uni_05mth_all_4g_0929 set call_sms_stream=0;
+update uni_05mth_all_4g_0929 set call_sms_stream=1 where
+(
+5*(call_times_20150511+call_times_20150512+call_times_20150513+call_times_20150514+call_times_20150515
++call_times_20150516+call_times_20150517+call_times_20150518+call_times_20150519+call_times_20150520)
+<=
+(call_times_20150411+call_times_20150412+call_times_20150413+call_times_20150414+call_times_20150415
++call_times_20150416+call_times_20150417+call_times_20150418+call_times_20150419+call_times_20150420)
+and
+5*(SMS_NUMS_20150511+SMS_NUMS_20150512+SMS_NUMS_20150513+SMS_NUMS_20150514+SMS_NUMS_20150515
++SMS_NUMS_20150516+SMS_NUMS_20150517+SMS_NUMS_20150518+SMS_NUMS_20150519+SMS_NUMS_20150520)
+<=
+(SMS_NUMS_20150411+SMS_NUMS_20150412+SMS_NUMS_20150413+SMS_NUMS_20150414+SMS_NUMS_20150415
++SMS_NUMS_20150416+SMS_NUMS_20150417+SMS_NUMS_20150418+SMS_NUMS_20150419+SMS_NUMS_20150420)
+and
+5*(total_use_stream_20150511+total_use_stream_20150512+total_use_stream_20150513+total_use_stream_20150514+total_use_stream_20150515
++total_use_stream_20150516+total_use_stream_20150517+total_use_stream_20150518+total_use_stream_20150519+total_use_stream_20150520)
+<=
+(total_use_stream_20150411+total_use_stream_20150412+total_use_stream_20150413+total_use_stream_20150414+total_use_stream_20150415
++total_use_stream_20150416+total_use_stream_20150417+total_use_stream_20150418+total_use_stream_20150419+total_use_stream_20150420)
+);
+
+
+
+
+
+
+
+
+alter table uni_05mth_all_4g_0929 add lost_tag_5_t2_4g number;
+update uni_05mth_all_4g_0929 set lost_tag_5_t2_4g=-1;
+update uni_05mth_all_4g_0929 set lost_tag_5_t2_4g=0 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201502=0) or 
+(LOST_TAG_201502=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201503=0) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201502=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201504=0) ;
+/*or
+(LOST_TAG_201502=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201503=2) ; 
+*/
+update uni_05mth_all_4g_0929 set lost_tag_5_t2_4g=1 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201502=0 and 
+LOST_TAG_201507=1) or 
+(LOST_TAG_201502=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201503=0 and 
+LOST_TAG_201507=1) or 
+(LOST_TAG_201502=2 and 
+LOST_TAG_201503=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201507=1) ;
+/*or 
+(LOST_TAG_201502=2 and 
+LOST_TAG_201503=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201507=1) ; 
+*/
+
+update uni_05mth_all_4g_0929 set EPARCHY_TYPE_201505=EPARCHY_TYPE_201505-1;
+update uni_05mth_all_4g_0929 set CREDIT_VALUE_201505=-1 where CREDIT_VALUE_201505=0;
+update uni_05mth_all_4g_0929 set MTC_NUM_201505=-1 where MTC_NUM_201505=0;
+update uni_05mth_all_4g_0929 set NO_LCALL_DURATION_201505=-1 where NO_LCALL_DURATION_201505=0;
+update uni_05mth_all_4g_0929 set PROV_LCALL_DURATION_201505=-1 where PROV_LCALL_DURATION_201505=0;
+update uni_05mth_all_4g_0929 set NATIONAL_LCALL_DURATION_201505=-1 where NATIONAL_LCALL_DURATION_201505=0;
+update uni_05mth_all_4g_0929 set INTERGAT_LCALL_DURATION_201505=-1 where INTERGAT_LCALL_DURATION_201505=0;
+update uni_05mth_all_4g_0929 set NOINTERGATLCALLDURATION_201505=-1 where NOINTERGATLCALLDURATION_201505=0;
+update uni_05mth_all_4g_0929 set ROAM_CALL_DURATION_201505=-1 where ROAM_CALL_DURATION_201505=0;
+update uni_05mth_all_4g_0929 set BILL_DURATION_01_201505=-1 where BILL_DURATION_01_201505=0;
+
+update uni_05mth_all_4g_0929 set DEBT_FEE_201505=-1 where DEBT_FEE_201505=0;
+update uni_05mth_all_4g_0929 set NOT_PACKAGE_USE_201505_201505=-1 where NOT_PACKAGE_USE_201505_201505=0;
+update uni_05mth_all_4g_0929 set FREE_FLOW_USE_201505=-1 where FREE_FLOW_USE_201505=0;
+update uni_05mth_all_4g_0929 set ROAM_STREAM_01_201505=-1 where ROAM_STREAM_01_201505=0;
+update uni_05mth_all_4g_0929 set ROAM_STREAM_02_201505=-1 where ROAM_STREAM_02_201505=0;
+update uni_05mth_all_4g_0929 set ROAM_STREAM_04_201505=-1 where ROAM_STREAM_04_201505=0;
+update uni_05mth_all_4g_0929 set SMS_NUMS_201505=-1 where SMS_NUMS_201505=0;
+
+create table yuanshishuju_4g_05to06_5_0929 as (select
+to_number(EPARCHY_CODE_201505) as EPARCHY_CODE_201505
+,to_number(USER_ID) as USER_ID
+,to_number(ID_1) as ID_1
+,to_number(ID_2) as ID_2
+,to_number(EPARCHY_TYPE_201505) as EPARCHY_TYPE_201505
+,to_number(ACTION_END_DATE_201505) as ACTION_END_DATE_201505
+,to_number(CREDIT_VALUE_201505) as CREDIT_VALUE_201505
+,to_number(JOIN_MONTH_201505) as JOIN_MONTH_201505
+,to_number(ROAM_TAG_03_201505) as ROAM_TAG_03_201505
+,to_number(MTC_NUM_201505) as MTC_NUM_201505
+,to_number(NO_LCALL_DURATION_201505) as NO_LCALL_DURATION_201505
+,to_number(PROV_LCALL_DURATION_201505) as PROV_LCALL_DURATION_201505
+,to_number(NATIONAL_LCALL_DURATION_201505) as NATIONAL_LCALL_DURATION_201505
+,to_number(INTERGAT_LCALL_DURATION_201505) as INTERGAT_LCALL_DURATION_201505
+,to_number(NOINTERGATLCALLDURATION_201505) as NOINTERGATLCALLDURATION_201505
+,to_number(ROAM_CALL_DURATION_201505) as ROAM_CALL_DURATION_201505
+,to_number(BILL_DURATION_01_201505) as BILL_DURATION_01_201505
+,to_number(CZ_FEE_01_201505) as CZ_FEE_01_201505
+,to_number(CUR_INCOME_201505) as CUR_INCOME_201505
+,to_number(PROM_FEE_201505) as PROM_FEE_201505
+,to_number(DEBT_FEE_201505) as DEBT_FEE_201505
+,to_number(NOT_PACKAGE_USE_201505_201505) as NOT_PACKAGE_USE_201505_201505
+,to_number(FREE_FLOW_USE_201505) as FREE_FLOW_USE_201505
+,to_number(ROAM_STREAM_01_201505) as ROAM_STREAM_01_201505
+,to_number(ROAM_STREAM_02_201505) as ROAM_STREAM_02_201505
+,to_number(ROAM_STREAM_04_201505) as ROAM_STREAM_04_201505
+,to_number(VOICEOVER_TAG_201505) as VOICEOVER_TAG_201505
+,to_number(SMS_NUMS_201505) as SMS_NUMS_201505
+,to_number(USER_STATE_CODESET_20150531) as USER_STATE_CODESET_20150531
+,to_number(USER_STATE_CODESET_20150501) as USER_STATE_CODESET_20150501
+,to_number(USER_STATE_CODESET_20150515) as USER_STATE_CODESET_20150515
+/*,to_number(CZ_FEE_01_history) as CZ_FEE_01_history
+,to_number(CUR_INCOME_history) as CUR_INCOME_history
+,to_number(SMS_NUMS_history) as SMS_NUMS_history
+,to_number(call_times_mtc_nums_history) as call_times_mtc_nums_history
+,to_number(call_times_bill_duration) as call_times_bill_duration*/
+,to_number(call_sms_stream) as call_sms_stream
+,to_number(lost_tag_5_t2_4g) as lost_tag_5_t2_4g
+
+from uni_05mth_all_4g_0929 where lost_tag_5_t2_4g!=-1);
+
+
+
+
+create table uni_06mth_all_4g_0929 as (select
+ASIAINFO_MON_QX_6_4G.USER_ID,
+(ASIAINFO_MON_QX_6_4G.USER_ID-mod(ASIAINFO_MON_QX_6_4G.USER_ID,10))/10 as ID_1,
+mod(ASIAINFO_MON_QX_6_4G.USER_ID,10) as ID_2,
+GROUP_TAG_201506,
+EPARCHY_CODE_201506,
+ACTION_END_DATE_201506,
+CREDIT_VALUE_201506,
+JOIN_MONTH_201506,
+VOICE_TAG_201506,
+ROAM_TAG_03_201506,
+MTC_NUM_201506,
+MTC_NUM_201505,
+MTC_NUM_201504,
+NO_LCALL_DURATION_201506,
+PROV_LCALL_DURATION_201506,
+NATIONAL_LCALL_DURATION_201506,
+INTERGAT_LCALL_DURATION_201506,
+NOINTERGATLCALLDURATION_201506,
+ROAM_CALL_DURATION_201506,
+BILL_DURATION_01_201506,
+BILL_DURATION_01_201505,
+CUR_INCOME_201506,
+CUR_INCOME_201505,
+CUR_INCOME_201504,
+PROM_FEE_201506,
+DEBT_FEE_201506,
+NOT_PACKAGE_USE_201506_201506,
+FREE_FLOW_USE_201503,
+FREE_FLOW_USE_201504,
+FREE_FLOW_USE_201505,
+FREE_FLOW_USE_201506,
+ROAM_STREAM_01_201503,
+ROAM_STREAM_01_201504,
+ROAM_STREAM_01_201505,
+ROAM_STREAM_01_201506,
+ROAM_STREAM_02_201503,
+ROAM_STREAM_02_201504,
+ROAM_STREAM_02_201505,
+ROAM_STREAM_02_201506,
+ROAM_STREAM_04_201506,
+VOICEOVER_TAG_201506,
+SMS_NUMS_201506,
+SMS_NUMS_201505,
+SMS_NUMS_201504,
+SMS_NUMS_201503,
+
+EPARCHY_TYPE_201506,
+CZ_FEE_01_201505,
+CZ_FEE_01_201506,
+CZ_FEE_01_201504,
+LOST_TAG_201503,
+LOST_TAG_201504,
+LOST_TAG_201505,
+LOST_TAG_201506,
+LOST_TAG_201507,
+LOST_TAG_201508,
+
+call_times_20150501,
+call_times_20150502,
+call_times_20150503,
+call_times_20150504,
+call_times_20150505,
+call_times_20150527,
+call_times_20150528,
+call_times_20150529,
+call_times_20150530,
+call_times_20150531,
+call_times_20150401,
+call_times_20150402,
+call_times_20150403,
+call_times_20150404,
+call_times_20150405,
+call_times_20150601,
+call_times_20150602,
+call_times_20150603,
+call_times_20150604,
+call_times_20150605,
+call_times_20150625,
+call_times_20150626,
+call_times_20150627,
+call_times_20150628,
+call_times_20150629,
+
+call_times_20150511,
+call_times_20150512,
+call_times_20150513,
+call_times_20150514,
+call_times_20150515,
+call_times_20150516,
+call_times_20150517,
+call_times_20150518,
+call_times_20150519,
+call_times_20150520,
+call_times_20150611,call_times_20150612,call_times_20150613,call_times_20150614,call_times_20150615,
+call_times_20150616,call_times_20150617,call_times_20150618,call_times_20150619,call_times_20150620,
+SMS_NUMS_20150511,SMS_NUMS_20150512,SMS_NUMS_20150513,SMS_NUMS_20150514,SMS_NUMS_20150515,
+SMS_NUMS_20150516,SMS_NUMS_20150517,SMS_NUMS_20150518,SMS_NUMS_20150519,SMS_NUMS_20150520,
+SMS_NUMS_20150611,SMS_NUMS_20150612,SMS_NUMS_20150613,SMS_NUMS_20150614,SMS_NUMS_20150615,
+SMS_NUMS_20150616,SMS_NUMS_20150617,SMS_NUMS_20150618,SMS_NUMS_20150619,SMS_NUMS_20150620,
+total_use_stream_20150511,total_use_stream_20150512,total_use_stream_20150513,total_use_stream_20150514,total_use_stream_20150515,
+total_use_stream_20150516,total_use_stream_20150517,total_use_stream_20150518,total_use_stream_20150519,total_use_stream_20150520,
+total_use_stream_20150611,total_use_stream_20150612,total_use_stream_20150613,total_use_stream_20150614,total_use_stream_20150615,
+total_use_stream_20150616,total_use_stream_20150617,total_use_stream_20150618,total_use_stream_20150619,total_use_stream_20150620,
+
+
+
+
+USER_STATE_CODESET_20150629,
+USER_STATE_CODESET_20150601,
+USER_STATE_CODESET_20150615
+
+from ASIAINFO_MON_QX_6_4G,
+ASIAINFO_USERSTCODESET_QX_5_4G,
+asiainfo_call_times_qx_6_4g,
+asiainfo_sms_nums_qx_6_4g, 
+asiainfo_totalusestream_qx6_4g
+where ASIAINFO_MON_QX_6_4G.user_id=ASIAINFO_USERSTCODESET_QX_5_4G.user_id
+and ASIAINFO_MON_QX_6_4G.user_id=asiainfo_call_times_qx_6_4g.user_id
+and ASIAINFO_MON_QX_6_4G.user_id=asiainfo_sms_nums_qx_6_4g.user_id
+and ASIAINFO_MON_QX_6_4G.user_id=asiainfo_totalusestream_qx6_4g.user_id
+);
+
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='3' where USER_STATE_CODESET_20150629='2';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='2' where USER_STATE_CODESET_20150629='4';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='4' where USER_STATE_CODESET_20150629='6';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='7' where USER_STATE_CODESET_20150629='7';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='5';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='6' where USER_STATE_CODESET_20150629='9';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='2' where USER_STATE_CODESET_20150629='A';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='3' where USER_STATE_CODESET_20150629='B';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='4' where USER_STATE_CODESET_20150629='F';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='2' where USER_STATE_CODESET_20150629='K';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='N';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='O';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='T';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='6' where USER_STATE_CODESET_20150629='U';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='X';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='M';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150629='5' where USER_STATE_CODESET_20150629='e';
+
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='3' where USER_STATE_CODESET_20150601='2';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='2' where USER_STATE_CODESET_20150601='4';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='4' where USER_STATE_CODESET_20150601='6';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='7' where USER_STATE_CODESET_20150601='7';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='5';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='6' where USER_STATE_CODESET_20150601='9';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='2' where USER_STATE_CODESET_20150601='A';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='3' where USER_STATE_CODESET_20150601='B';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='4' where USER_STATE_CODESET_20150601='F';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='2' where USER_STATE_CODESET_20150601='K';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='N';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='O';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='T';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='6' where USER_STATE_CODESET_20150601='U';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='X';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='M';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150601='5' where USER_STATE_CODESET_20150601='e';
+
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='3' where USER_STATE_CODESET_20150615='2';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='2' where USER_STATE_CODESET_20150615='4';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='4' where USER_STATE_CODESET_20150615='6';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='7' where USER_STATE_CODESET_20150615='7';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='5';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='6' where USER_STATE_CODESET_20150615='9';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='2' where USER_STATE_CODESET_20150615='A';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='3' where USER_STATE_CODESET_20150615='B';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='4' where USER_STATE_CODESET_20150615='F';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='2' where USER_STATE_CODESET_20150615='K';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='N';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='O';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='T';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='6' where USER_STATE_CODESET_20150615='U';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='X';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='M';
+update uni_06mth_all_4g_0929 set USER_STATE_CODESET_20150615='5' where USER_STATE_CODESET_20150615='e';
+/*
+alter table uni_06mth_all_4g_0929 add CZ_FEE_01_history_1  number;
+update uni_06mth_all_4g_0929 set  CZ_FEE_01_history_1=-1;
+update uni_06mth_all_4g_0929 set CZ_FEE_01_history_1=0 where
+(CZ_FEE_01_201505!=0 or
+CZ_FEE_01_201506!=0 or
+CZ_FEE_01_201504!=0);
+update uni_06mth_all_4g_0929 set CZ_FEE_01_history_1=1 where
+(CZ_FEE_01_201505=0 and
+CZ_FEE_01_201506=0 and
+CZ_FEE_01_201504=0);
+
+
+alter table uni_06mth_all_4g_0929 add CUR_INCOME_history  number;
+update uni_06mth_all_4g_0929 set  CUR_INCOME_history=-1;
+update uni_06mth_all_4g_0929 set CUR_INCOME_history=0 where
+(CUR_INCOME_201504<=CUR_INCOME_201506+CUR_INCOME_201505);
+update uni_06mth_all_4g_0929 set CUR_INCOME_history=1 where
+(CUR_INCOME_201504>CUR_INCOME_201506+CUR_INCOME_201505);
+
+alter table uni_06mth_all_4g_0929 add SMS_NUMS_history  number;
+update uni_06mth_all_4g_0929 set  SMS_NUMS_history=-1;
+update uni_06mth_all_4g_0929 set SMS_NUMS_history=0 where
+(SMS_NUMS_201506!=0 or
+SMS_NUMS_201505!=0 or
+(SMS_NUMS_201504=0 and SMS_NUMS_201503=0)
+);
+update uni_06mth_all_4g_0929 set SMS_NUMS_history=1 where
+(SMS_NUMS_201506=0 and
+SMS_NUMS_201505=0 and
+(SMS_NUMS_201504!=0 or SMS_NUMS_201503!=0));
+
+alter table uni_06mth_all_4g_0929 add call_times_mtc_nums_history  number;
+update uni_06mth_all_4g_0929 set call_times_mtc_nums_history=0;
+update uni_06mth_all_4g_0929 set call_times_mtc_nums_history=1 where
+(
+10*(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+<=
+(call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405)
+and
+10*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605)
+<=
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505)
+and MTC_num_201506<=mtc_num_201504 and MTC_num_201506<=mtc_num_201505
+);
+
+alter table uni_06mth_all_4g_0929 add call_times_bill_duration  number;
+update uni_06mth_all_4g_0929 set call_times_bill_duration=0;
+update uni_06mth_all_4g_0929 set call_times_bill_duration=1 where
+((
+5*(call_times_20150601+call_times_20150602+call_times_20150603+call_times_20150604+call_times_20150605
++call_times_20150625+call_times_20150626+call_times_20150627+call_times_20150628+call_times_20150629
+)
+<=
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505
++call_times_20150527+call_times_20150528+call_times_20150529+call_times_20150530+call_times_20150531)
+)
+and
+BILL_DURATION_01_201505>=5*BILL_DURATION_01_201506
+);*/
+
+alter table uni_06mth_all_4g_0929 add call_sms_stream  number;
+update uni_06mth_all_4g_0929 set call_sms_stream=0;
+update uni_06mth_all_4g_0929 set call_sms_stream=1 where
+(
+5*(call_times_20150611+call_times_20150612+call_times_20150613+call_times_20150614+call_times_20150615
++call_times_20150616+call_times_20150617+call_times_20150618+call_times_20150619+call_times_20150620
+)
+<=
+(call_times_20150511+call_times_20150512+call_times_20150513+call_times_20150514+call_times_20150515
++call_times_20150516+call_times_20150517+call_times_20150518+call_times_20150519+call_times_20150520)
+
+and
+5*(SMS_NUMS_20150611+SMS_NUMS_20150612+SMS_NUMS_20150613+SMS_NUMS_20150614+SMS_NUMS_20150615
++SMS_NUMS_20150616+SMS_NUMS_20150617+SMS_NUMS_20150618+SMS_NUMS_20150619+SMS_NUMS_20150620
+)
+<=
+(SMS_NUMS_20150511+SMS_NUMS_20150512+SMS_NUMS_20150513+SMS_NUMS_20150514+SMS_NUMS_20150515
++SMS_NUMS_20150516+SMS_NUMS_20150517+SMS_NUMS_20150518+SMS_NUMS_20150519+SMS_NUMS_20150520)
+and
+5*(total_use_stream_20150611+total_use_stream_20150612+total_use_stream_20150613+total_use_stream_20150614+total_use_stream_20150615
++total_use_stream_20150616+total_use_stream_20150617+total_use_stream_20150618+total_use_stream_20150619+total_use_stream_20150620
+)
+<=
+(total_use_stream_20150511+total_use_stream_20150512+total_use_stream_20150513+total_use_stream_20150514+total_use_stream_20150515
++total_use_stream_20150516+total_use_stream_20150517+total_use_stream_20150518+total_use_stream_20150519+total_use_stream_20150520)
+);
+
+
+
+alter table uni_06mth_all_4g_0929 add lost_tag_6_t2_4g number;
+update uni_06mth_all_4g_0929 set lost_tag_6_t2_4g=-1;
+update uni_06mth_all_4g_0929 set lost_tag_6_t2_4g=0 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0);
+/*or
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=2 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=0);
+*/
+update uni_06mth_all_4g_0929 set lost_tag_6_t2_4g=1 where
+(LOST_TAG_201503=0 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=1) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=0 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=1) or 
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=0 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=1);
+/*or
+(LOST_TAG_201503=2 and 
+LOST_TAG_201504=2 and 
+LOST_TAG_201505=2 and 
+LOST_TAG_201506=0 and 
+LOST_TAG_201507=0 and 
+LOST_TAG_201508=1);
+*/
+
+update uni_06mth_all_4g_0929 set EPARCHY_TYPE_201506=EPARCHY_TYPE_201506-1;
+
+update uni_06mth_all_4g_0929 set CREDIT_VALUE_201506=-1 where CREDIT_VALUE_201506=0;
+update uni_06mth_all_4g_0929 set MTC_NUM_201506=-1 where MTC_NUM_201506=0;
+update uni_06mth_all_4g_0929 set NO_LCALL_DURATION_201506=-1 where NO_LCALL_DURATION_201506=0;
+update uni_06mth_all_4g_0929 set PROV_LCALL_DURATION_201506=-1 where PROV_LCALL_DURATION_201506=0;
+update uni_06mth_all_4g_0929 set NATIONAL_LCALL_DURATION_201506=-1 where NATIONAL_LCALL_DURATION_201506=0;
+update uni_06mth_all_4g_0929 set INTERGAT_LCALL_DURATION_201506=-1 where INTERGAT_LCALL_DURATION_201506=0;
+update uni_06mth_all_4g_0929 set NOINTERGATLCALLDURATION_201506=-1 where NOINTERGATLCALLDURATION_201506=0;
+update uni_06mth_all_4g_0929 set ROAM_CALL_DURATION_201506=-1 where ROAM_CALL_DURATION_201506=0;
+update uni_06mth_all_4g_0929 set BILL_DURATION_01_201506=-1 where BILL_DURATION_01_201506=0;
+
+update uni_06mth_all_4g_0929 set DEBT_FEE_201506=-1 where DEBT_FEE_201506=0;
+update uni_06mth_all_4g_0929 set NOT_PACKAGE_USE_201506_201506=-1 where NOT_PACKAGE_USE_201506_201506=0;
+update uni_06mth_all_4g_0929 set FREE_FLOW_USE_201506=-1 where FREE_FLOW_USE_201506=0;
+update uni_06mth_all_4g_0929 set ROAM_STREAM_01_201506=-1 where ROAM_STREAM_01_201506=0;
+update uni_06mth_all_4g_0929 set ROAM_STREAM_02_201506=-1 where ROAM_STREAM_02_201506=0;
+update uni_06mth_all_4g_0929 set ROAM_STREAM_04_201506=-1 where ROAM_STREAM_04_201506=0;
+update uni_06mth_all_4g_0929 set SMS_NUMS_201506=-1 where SMS_NUMS_201506=0;
+
+create table yuanshishuju_4g_05to06_6_0929 as (select
+to_number(EPARCHY_CODE_201506) as EPARCHY_CODE_201506
+,to_number(USER_ID) as USER_ID
+,to_number(ID_1) as ID_1
+,to_number(ID_2) as ID_2
+,to_number(EPARCHY_TYPE_201506) as EPARCHY_TYPE_201506
+,to_number(ACTION_END_DATE_201506) as ACTION_END_DATE_201506
+,to_number(CREDIT_VALUE_201506) as CREDIT_VALUE_201506
+,to_number(JOIN_MONTH_201506) as JOIN_MONTH_201506
+,to_number(ROAM_TAG_03_201506) as ROAM_TAG_03_201506
+,to_number(MTC_NUM_201506) as MTC_NUM_201506
+,to_number(NO_LCALL_DURATION_201506) as NO_LCALL_DURATION_201506
+,to_number(PROV_LCALL_DURATION_201506) as PROV_LCALL_DURATION_201506
+,to_number(NATIONAL_LCALL_DURATION_201506) as NATIONAL_LCALL_DURATION_201506
+,to_number(INTERGAT_LCALL_DURATION_201506) as INTERGAT_LCALL_DURATION_201506
+,to_number(NOINTERGATLCALLDURATION_201506) as NOINTERGATLCALLDURATION_201506
+,to_number(ROAM_CALL_DURATION_201506) as ROAM_CALL_DURATION_201506
+,to_number(BILL_DURATION_01_201506) as BILL_DURATION_01_201506
+,to_number(CZ_FEE_01_201506) as CZ_FEE_01_201506
+,to_number(CUR_INCOME_201506) as CUR_INCOME_201506
+,to_number(PROM_FEE_201506) as PROM_FEE_201506
+,to_number(DEBT_FEE_201506) as DEBT_FEE_201506
+,to_number(NOT_PACKAGE_USE_201506_201506) as NOT_PACKAGE_USE_201506_201506
+,to_number(FREE_FLOW_USE_201506) as FREE_FLOW_USE_201506
+,to_number(ROAM_STREAM_01_201506) as ROAM_STREAM_01_201506
+,to_number(ROAM_STREAM_02_201506) as ROAM_STREAM_02_201506
+,to_number(ROAM_STREAM_04_201506) as ROAM_STREAM_04_201506
+,to_number(VOICEOVER_TAG_201506) as VOICEOVER_TAG_201506
+,to_number(SMS_NUMS_201506) as SMS_NUMS_201506
+,to_number(USER_STATE_CODESET_20150629) as USER_STATE_CODESET_20150629
+,to_number(USER_STATE_CODESET_20150601) as USER_STATE_CODESET_20150601
+,to_number(USER_STATE_CODESET_20150615) as USER_STATE_CODESET_20150615
+/*,to_number(CZ_FEE_01_history_1) as CZ_FEE_01_history_1
+,to_number(CUR_INCOME_history) as CUR_INCOME_history
+,to_number(SMS_NUMS_history) as SMS_NUMS_history
+,to_number(call_times_mtc_nums_history) as call_times_mtc_nums_history
+,to_number(call_times_bill_duration) as call_times_bill_duration*/
+,to_number(call_sms_stream) as call_sms_stream
+,to_number(lost_tag_6_t2_4g) as lost_tag_6_t2_4g
+
+from uni_06mth_all_4g_0929 where lost_tag_6_t2_4g!=-1);
