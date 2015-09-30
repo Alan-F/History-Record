@@ -1,0 +1,156 @@
+create table uni_05mth_test_1 as
+(select 
+uni_05mth_test.	EPARCHY_CODE_201505,
+uni_05mth_test.	USER_ID,
+uni_05mth_test.	ID_1,
+uni_05mth_test.	ID_2,
+uni_05mth_test.	EPARCHY_TYPE_201505,
+uni_05mth_test.	ACTION_END_DATE_201505,
+uni_05mth_test.	CREDIT_VALUE_201505,
+uni_05mth_test.	JOIN_MONTH_201505,
+uni_05mth_test.	VOICE_TAG_201505,
+uni_05mth_test.	ROAM_TAG_03_201505,
+uni_05mth_test.	MTC_NUM_201505,
+uni_05mth_test.	NO_LCALL_DURATION_201505,
+uni_05mth_test.	PROV_LCALL_DURATION_201505,
+uni_05mth_test.	NATIONAL_LCALL_DURATION_201505,
+uni_05mth_test.	INTERGAT_LCALL_DURATION_201505,
+uni_05mth_test.	NOINTERGATLCALLDURATION_201505,
+uni_05mth_test.	ROAM_CALL_DURATION_201505,
+uni_05mth_test.	BILL_DURATION_01_201505,
+uni_05mth_test.	CZ_FEE_01_201505,
+uni_05mth_test.	CUR_INCOME_201505,
+uni_05mth_test.	PROM_FEE_201505,
+uni_05mth_test.	DEBT_FEE_201505,
+uni_05mth_test.	NOT_PACKAGE_USE_201505_201505,
+uni_05mth_test.	FREE_FLOW_USE_201505,
+uni_05mth_test.	ROAM_STREAM_01_201505,
+uni_05mth_test.	ROAM_STREAM_02_201505,
+uni_05mth_test.	ROAM_STREAM_04_201505,
+uni_05mth_test.	VOICEOVER_TAG_201505,
+uni_05mth_test.	SMS_NUMS_201505,
+uni_05mth_test.	LOST_TAG_201502,
+uni_05mth_test.	LOST_TAG_201503,
+uni_05mth_test.	LOST_TAG_201504,
+uni_05mth_test.	LOST_TAG_201505,
+uni_05mth_test.	LOST_TAG_201506,
+uni_05mth_test.	LOST_TAG_201507,
+uni_05mth_test.	USER_STATE_CODESET_20150523,
+uni_05mth_test.	USER_STATE_CODESET_20150501,
+uni_05mth_test.	USER_STATE_CODESET_20150430,
+uni_05mth_test.	LOST_TAG_5_T2_4G,
+uni_05mth_test.	BILL_DURATION_01_201504,
+
+asiainfo_call_times_qx_5_4g.call_times_20150401 ,
+asiainfo_call_times_qx_5_4g.call_times_20150402 ,
+asiainfo_call_times_qx_5_4g.call_times_20150403 ,
+asiainfo_call_times_qx_5_4g.call_times_20150404 ,
+asiainfo_call_times_qx_5_4g.call_times_20150405 ,
+asiainfo_call_times_qx_5_4g.call_times_20150426 ,
+asiainfo_call_times_qx_5_4g.call_times_20150427 ,
+asiainfo_call_times_qx_5_4g.call_times_20150428 ,
+asiainfo_call_times_qx_5_4g.call_times_20150429 ,
+asiainfo_call_times_qx_5_4g.call_times_20150430 ,
+asiainfo_call_times_qx_5_4g.call_times_20150501 ,
+asiainfo_call_times_qx_5_4g.call_times_20150502 ,
+asiainfo_call_times_qx_5_4g.call_times_20150503 ,
+asiainfo_call_times_qx_5_4g.call_times_20150504 ,
+asiainfo_call_times_qx_5_4g.call_times_20150505 ,
+asiainfo_call_times_qx_5_4g.call_times_20150530 ,
+asiainfo_call_times_qx_5_4g.call_times_20150527 ,
+asiainfo_call_times_qx_5_4g.call_times_20150528 ,
+asiainfo_call_times_qx_5_4g.call_times_20150529 ,
+asiainfo_call_times_qx_5_4g.call_times_20150531 
+from asiainfo_call_times_qx_5_4g, uni_05mth_test
+where uni_05mth_test.user_id=asiainfo_call_times_qx_5_4g.user_id
+);
+
+alter table uni_05mth_test_1 add call_times_bill_duration  number;
+update uni_05mth_test_1 set call_times_bill_duration=0;
+update uni_05mth_test_1 set call_times_bill_duration=1 where
+((call_times_20150401+call_times_20150402+call_times_20150403+call_times_20150404+call_times_20150405
++call_times_20150426+call_times_20150427+call_times_20150428+call_times_20150429+call_times_20150430
+)
+>=5*
+(call_times_20150501+call_times_20150502+call_times_20150503+call_times_20150504+call_times_20150505
++call_times_20150527+call_times_20150528+call_times_20150529+call_times_20150530+call_times_20150531)
+and
+BILL_DURATION_01_201504>=5*BILL_DURATION_01_201505
+);
+
+create table yuanshishuju_4g_05to06_5_0930 as (select
+to_number(EPARCHY_CODE_201505) as EPARCHY_CODE_201505
+,to_number(USER_ID) as USER_ID
+,to_number(ID_1) as ID_1
+,to_number(ID_2) as ID_2
+,to_number(EPARCHY_TYPE_201505) as EPARCHY_TYPE_201505
+,to_number(ACTION_END_DATE_201505) as ACTION_END_DATE_201505
+,to_number(CREDIT_VALUE_201505) as CREDIT_VALUE_201505
+,to_number(JOIN_MONTH_201505) as JOIN_MONTH_201505
+,to_number(ROAM_TAG_03_201505) as ROAM_TAG_03_201505
+,to_number(MTC_NUM_201505) as MTC_NUM_201505
+,to_number(NO_LCALL_DURATION_201505) as NO_LCALL_DURATION_201505
+,to_number(PROV_LCALL_DURATION_201505) as PROV_LCALL_DURATION_201505
+,to_number(NATIONAL_LCALL_DURATION_201505) as NATIONAL_LCALL_DURATION_201505
+,to_number(INTERGAT_LCALL_DURATION_201505) as INTERGAT_LCALL_DURATION_201505
+,to_number(NOINTERGATLCALLDURATION_201505) as NOINTERGATLCALLDURATION_201505
+,to_number(ROAM_CALL_DURATION_201505) as ROAM_CALL_DURATION_201505
+,to_number(BILL_DURATION_01_201505) as BILL_DURATION_01_201505
+,to_number(CZ_FEE_01_201505) as CZ_FEE_01_201505
+,to_number(CUR_INCOME_201505) as CUR_INCOME_201505
+,to_number(PROM_FEE_201505) as PROM_FEE_201505
+,to_number(DEBT_FEE_201505) as DEBT_FEE_201505
+,to_number(NOT_PACKAGE_USE_201505_201505) as NOT_PACKAGE_USE_201505_201505
+,to_number(FREE_FLOW_USE_201505) as FREE_FLOW_USE_201505
+,to_number(ROAM_STREAM_01_201505) as ROAM_STREAM_01_201505
+,to_number(ROAM_STREAM_02_201505) as ROAM_STREAM_02_201505
+,to_number(ROAM_STREAM_04_201505) as ROAM_STREAM_04_201505
+,to_number(VOICEOVER_TAG_201505) as VOICEOVER_TAG_201505
+,to_number(SMS_NUMS_201505) as SMS_NUMS_201505
+,to_number(USER_STATE_CODESET_20150531) as USER_STATE_CODESET_20150531
+,to_number(USER_STATE_CODESET_20150501) as USER_STATE_CODESET_20150501
+,to_number(USER_STATE_CODESET_20150515) as USER_STATE_CODESET_20150515
+,to_number(call_times_bill_duration) as call_times_bill_duration
+,to_number(lost_tag_5_t2_4g) as lost_tag_5_t2_4g
+
+from uni_05mth_test_1 where lost_tag_5_t2_4g!=-1);
+
+
+
+
+
+
+
+
+
+
+
+
+update student set marks= (select grades from student2 where student.student_id=student2.student_id);
+
+alter table uni_05mth_test add  BILL_DURATION_01_201504 number;
+alter table uni_05mth_test  add 
+(call_times_20150401 number,
+call_times_20150402 number,
+call_times_20150403 number,
+call_times_20150404 number,
+call_times_20150405 number,
+call_times_20150426 number,
+call_times_20150427 number,
+call_times_20150428 number,
+call_times_20150429 number,
+call_times_20150430 number);
+alter table uni_05mth_test  add 
+(call_times_20150501 number,
+call_times_20150502 number,
+call_times_20150503 number,
+call_times_20150504 number,
+call_times_20150505 number,
+call_times_20150530 number,
+call_times_20150527 number,
+call_times_20150528 number,
+call_times_20150529 number,
+call_times_20150531 number);
+
+	update  uni_05mth_test		set		call_times_20150401	=	select		call_times_20150401		from		asiainfo_call_times_qx_5_4g		where	asiainfo_call_times_qx_5_4g	.user_id=	uni_05mth_test	.user_id	;
+	update  		uni_05mth_test		set		call_times_20150401	=	(select		call_times_20150401		from		asiainfo_call_times_qx_5_4g		where	asiainfo_call_times_qx_5_4g	.user_id=	uni_05mth_test	.user_id)	;
