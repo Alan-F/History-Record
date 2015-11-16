@@ -1,0 +1,804 @@
+#include<stdio.h>
+#include <fstream>
+//#include  <io.h>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <string.h>
+#include <algorithm>
+#include <vector>
+#include <math.h>
+#include "malloc.h"
+#include<ctime>
+#include <omp.h>
+#include <occi.h>
+#include <sstream>
+#include<time.h>
+#include <cstdlib>
+//#include <stringstream>
+#define ptablename "YUANSHISHUJU"
+#define tablename1 "TABLE2"
+#define tablename2 "TABLE_SORT2"
+#define GET_ARRAY_LEN(array,len) {len = (sizeof(array) / sizeof(array[0]));}
+using namespace std;
+using namespace oracle::occi;
+
+
+
+
+void menu(){
+	cout<<"*--------------------------------------------*"<<endl;
+	cout<<"1.任意取参数创建原始数据"<<endl;
+	cout<<"2.记录特殊参数的离散化方案并离散化"<<endl;
+	cout<<"3.取原始数据的属性创建空表table2"<<endl;
+	cout<<"4.指定某一参数从某一个值变成另一个值"<<endl;
+	cout<<"5.删除yuanshishuju、table2和table_sort2"<<endl;
+	cout<<"6.直接建立yuanshishuju"<<endl;
+	cout<<"C.清屏"<<endl;
+	cout<<"D.删除out.txt"<<endl;
+	cout<<"X.退出"<<endl;
+};
+
+template <class T>
+int getArrayLen(T& array)
+
+{
+
+	return (sizeof(array) / sizeof(array[0]));
+
+}
+
+//指定某一参数从某一个值变成另一个值
+string UpdateValueSql();
+
+//sql语句，任意取参数创建原始数据
+string CreateYuanshishuju(string filepath);
+
+//记录特殊参数的离散化方案，并离散化
+string AttDiscret(string filepath,int flag,int plan);
+
+//用input.txt去创建talble2
+string IptCrtTable2(string filepath);
+
+//创建table2
+string CreateTable2();
+
+//直接创建yuanshishuju
+string CreateYuanshishuju2(string tablename);
+
+//执行sql语句
+void SqlRun(string filepath);
+
+//从其他表中插入属性到原始表
+void Insert_att(string tablename,string emptytablename,string filepath,string filepath2); 
+
+
+
+
+int main(){
+
+
+	/*string a="UPDATE tablename SET colname = b WHERE colname = a;",temp;
+	ifstream read;
+	read.open("./out.txt");
+	getline(read,temp);
+	read.close();*/
+
+	
+
+	
+	
+	
+
+
+
+
+	char conchar[1024];
+	menu();
+
+	//check whether the file exists or not
+	fstream _file;
+	_file.open("./out.txt");
+	if(_file){
+		_file.close();
+		system("rm out.txt");//删除out文件
+	}
+	/*if( (_access( "out.txt", 0 )) != -1 )
+	{
+	system("rm out.txt");//删除out文件
+	}*/
+
+	while(1){
+		cout<<"----------------------------------------------"<<endl;
+		cout<<"请选择：";
+		cin.getline(conchar,1024,'\n');
+		cin.clear();//清除错误状态
+		//cin.sync();
+		if(strlen(conchar)==1){
+			switch (conchar[0])
+			{
+			case 'x':case 'X':
+				return 0;
+				break;
+		/*	case '1':
+			    {
+					cout<<"createyuanshishuju:"<<endl;
+					string filepath,sql,temp;
+					cin>>filepath;
+					if((filepath.length()<=4)||(filepath.substr(filepath.length()-4,4)!=".txt"))
+					{cout<<"....输入的指令不正确！"<<endl;break;}
+					else sql=CreateYuanshishuju(filepath);
+					cout<<"sql:"<<sql<<endl;
+					ofstream out;
+					out.open("./out.txt",ios::app);
+					out<<sql;
+					out.close();
+					break;
+				}
+				
+
+			case '2':
+				{
+					cout<<"attdiscret:"<<endl;
+					string filepath,sql;
+					int plan,flag;
+					cin>>filepath>>flag>>plan;
+					if((filepath.length()<=4)||(filepath.substr(filepath.length()-4,4)!=".txt"))
+					{cout<<"....输入的指令不正确！"<<endl;break;}
+					sql=AttDiscret(filepath,flag,plan);
+					cout<<"sql:"<<sql<<endl;
+					ofstream out;
+					out.open("./out.txt",ios::app);
+					out<<sql;
+					out.close();
+					break;
+				}
+			case '3':
+				{
+					cout<<"createtable2:"<<endl;
+					string sql;
+					sql=CreateTable2();
+					if(sql=="")
+					{
+						cout<<"使用输入文件创建table2：";
+						string filepath;
+						cin>>filepath;
+						sql=IptCrtTable2(filepath);
+					}
+					cout<<"sql:"<<sql<<endl;
+					ofstream out;
+					out.open("./out.txt",ios::app);
+					out<<sql;
+					out.close();
+					break;
+				}
+			case '4':
+				{
+					cout<<"updatevalue:"<<endl;
+					string sql=UpdateValueSql();
+					cout<<"sql:"<<sql<<endl;
+					ofstream out;
+					out.open("./out.txt",ios::app);
+					out<<sql;
+					out.close();
+					cin.clear();
+					cin.sync();
+					break;
+				}
+			case '5':
+				{
+					cout<<"droptable:"<<endl;
+					string str="drop table ";
+					string sql=str+ptablename+";"+str+tablename1+";"+str+tablename2+";";
+					cout<<"sql:"<<sql<<endl;
+					ofstream out;
+					out.open("./out.txt");
+					out<<sql;
+					out.close();
+					break;
+				}
+				*/
+			case '6':
+				{
+					//cout<<"Training"<<endl;
+					
+					cout<<"请输入原始表名"<<endl;
+					string tablename;
+					cin>>tablename;
+					string sql=sql+CreateYuanshishuju2(tablename);
+					//cout<<"sql:"<<sql<<endl;
+					
+					
+					ofstream out;
+					out.open("./out.txt",ios::app);
+					out<<sql;
+					out.close();
+					SqlRun("out.txt");
+					break;
+				}
+			case 'c':case 'C':
+				system("cls");
+				cin.clear();
+				cin.sync();
+				menu();
+				break;
+			case 'd':case'D':
+				if(system("rm out.txt")==0)cout<<"删除成功!!!"<<endl;
+				break;
+			default:
+				cout<<"....输入的选择不正确！"<<endl;
+				cin.clear();
+				cin.sync();
+				break;
+
+			}
+		}
+		else{
+			cout<<"....输入的选择不正确！"<<endl;
+			cin.clear();
+			cin.sync();
+
+		}
+		cin.clear();
+		cin.sync();
+	}
+	//system("pause");
+
+	return 0;
+}
+
+
+//执行sql语句
+void SqlRun(string filepath)
+{
+Environment *env;    //env1,*env2,*env3,*env4,*env5,*env6;
+Connection *conn;    //conn1,*conn2,*conn3,*conn4,*conn5,*conn6;
+Statement *stmt;     //stmt1,*stmt2,*stmt3,*stmt4,*stmt5,*stmt6;
+ResultSet *rs;       //rs1,*rs2,*rs3,*rs4,*rs5,*rs6;
+string username = "ucr_zs_south";
+string password = "Zd_0918_Model";
+string connstring = "//132.121.86.53:1521/zdxmdb";
+string title="sysu_test_y";
+string temp;
+env = Environment::createEnvironment(); 
+conn = env->createConnection(username,password,connstring); 
+stmt = conn->createStatement();
+
+
+ifstream read;
+read.open(filepath.c_str());
+while(getline(read,temp,';'))
+{
+try
+{
+stmt->setSQL(temp);
+stmt->executeUpdate();
+cout<<temp<<endl;
+}
+catch(SQLException &ex)
+{
+cout <<ex.what()<< endl;
+continue;
+}
+}
+read.close();
+cout<<"SQL command run!!!"<<endl;
+conn->terminateStatement(stmt); 
+env->terminateConnection(conn); 
+Environment::terminateEnvironment(env);
+}
+
+
+//记录特殊参数的离散化方案，并离散化
+string AttDiscret(string filepath,int flag,int plan)
+{
+	ifstream read;
+	read.open(filepath.c_str());
+	string tablename,temp_tablename;
+	vector <string> attname;
+	string attstr[]={"INIT_DEPOSIT_FEE","QQW_CALL_DURATION_MON","FREE_FLOW_USE","OTH_FEE",
+		"DEPOSIT_FEE_MON","PAYDEPOSIT_FEE_MON","DEBT_FEE","DEBT1","DEBT2","DEBT3"};
+	getline(read,temp_tablename);
+	if(flag==0)tablename=ptablename;
+	else if(flag==1)tablename=temp_tablename;
+
+	string temp;
+	int attnum=0;
+	while(getline(read,temp))
+	{
+		attname.push_back(temp);
+		attnum++;
+	}
+	read.close();
+	string sql;
+
+	for(int i=0;i<attnum;i++)
+	{
+		//方案1
+		if(plan==1){
+			if(attname[i].substr(0,18)=="USER_STATE_CODESET")
+			{
+				sql=sql+"update "+tablename+ " set "+ attname[i]+" = "+"'3'  "+ " where " +attname[i]+" = "+"'2';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'2'  "+ " where " +attname[i]+" = "+"'4';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'4'  "+ " where " +attname[i]+" = "+"'6';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'7'  "+ " where " +attname[i]+" = "+"'7';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'5'  "+ " where " +attname[i]+" = "+"'5';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'6'  "+ " where " +attname[i]+" = "+"'9';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'2'  "+ " where " +attname[i]+" = "+"'A';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'3'  "+ " where " +attname[i]+" = "+"'B';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'4'  "+ " where " +attname[i]+" = "+"'F';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'2'  "+ " where " +attname[i]+" = "+"'K';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'5'  "+ " where " +attname[i]+" = "+"'N';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'5'  "+ " where " +attname[i]+" = "+"'O';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'5'  "+ " where " +attname[i]+" = "+"'T';"+
+					"update "+tablename+ " set "+ attname[i]+" = "+"'6'  "+ " where " +attname[i]+" = "+"'U';";
+
+			}}
+		//方案2
+		if(plan==2){
+			for(int j=0;j<getArrayLen(attstr);j++)
+			{
+				if(attname[i]==attstr[j])
+				{
+					sql=sql+"UPDATE "+tablename+" SET "+attname[i]+" = "+"-1 "+" WHERE "+attname[i]+" = "+"0;";
+				}
+			}
+		}
+	}
+	return sql;
+}
+
+//sql语句，任意取参数创建原始数据
+string CreateYuanshishuju(string filepath)
+{
+	ifstream read;
+	read.open(filepath.c_str());
+	string tablename;
+	vector <string> attname;
+	getline(read,tablename);
+	string temp;
+	int attnum=0;
+	while(getline(read,temp))
+	{
+		attname.push_back(temp);
+		attnum++;
+	}
+	read.close();
+
+
+	string str1="CREATE TABLE ",
+		str2=" AS(SELECT ",
+		str3=" FROM ",
+		str5=" WHERE ",
+		str4="!=-1);";
+	string sql1,temp1;
+	for(int i=0;i<attnum;i++)
+	{
+		if(i<attnum-1)
+		{temp1=temp1+" TO_NUMBER("+attname[i]+") AS "+attname[i]+",";}
+		else
+		{temp1=temp1+" TO_NUMBER("+attname[i]+") AS "+attname[i];}
+	}
+	
+	sql1=sql1+str1+ptablename+str2+temp1+str3+tablename+str5+attname[attnum-1]+str4;
+	return sql1;
+}
+
+
+//指定某一参数从某一个值变成另一个值
+string UpdateValueSql()
+{
+	string tablename,colname,sql,value1,value2;
+	cin>>tablename>>colname>>value1>>value2;
+	sql="UPDATE "+tablename+" SET "+colname+" = "+value2+" WHERE "+colname+" = "+value1+";";
+	return sql;
+}
+
+
+//用input.txt去创建table2
+string IptCrtTable2(string filepath)
+{
+	ifstream read;
+	read.open(filepath.c_str());
+	string tablename;
+	vector <string> attname;
+	getline(read,tablename);
+	string temp;
+	int attnum=0;
+	while(getline(read,temp))
+	{
+		attname.push_back(temp);
+		attnum++;
+	}
+	read.close();
+
+	string str1="CREATE TABLE ",str2=" NUMBER",str3="(",str4=")",str5=",";
+	string sql;
+	for(int i=0;i<attnum;i++)
+	{
+		if(i==0)sql=sql+str1+tablename1+str3+attname[i]+str2+str5;
+		else if(i==attnum-1)sql=sql+attname[i]+str2+str4+";";
+		else sql=sql+attname[i]+str2+str5;
+	}
+	return sql;
+}
+
+/*
+//取原始数据属性创建table2
+string CreateTable2()
+{
+	vector <string> s;
+	Environment *env;    //env1,*env2,*env3,*env4,*env5,*env6;
+	Connection *conn;    //conn1,*conn2,*conn3,*conn4,*conn5,*conn6;
+	string username = "ucr_zs_south";
+	string password = "Ora_123QWE";
+	string connstring = "//132.121.86.53:1521/zdxmdb";
+	string title=ptablename;
+	string sql;
+	int   uiColumnNum;
+	try
+	{
+		env = Environment::createEnvironment(); 
+		conn = env->createConnection(username,password,connstring); 
+		MetaData custtab_metaData = conn->getMetaData(title, MetaData::PTYPE_TABLE);     //输出表头
+		vector <MetaData> listOfColumns = custtab_metaData.getVector(MetaData::ATTR_LIST_COLUMNS);
+		uiColumnNum   =   listOfColumns.size();
+		cout<<"colnum:"<<uiColumnNum<<endl;
+		for   (int ii=0;   ii <uiColumnNum;   ii++) 
+		{ 
+		s.push_back(listOfColumns[ii].getString(MetaData::ATTR_NAME).c_str());//MetaData   columnObj   =   listOfColumns[ii]; 
+		}
+		string str1="CREATE TABLE ",str2=" NUMBER",str3="(",str4=")",str5=",";
+		for(int i=0;i<uiColumnNum;i++)
+		{
+			if(i==0)sql=sql+str1+tablename1+str3+s[i]+str2+str5;
+			else if(i==uiColumnNum-1)sql=sql+s[i]+str2+str4+";";
+			else sql=sql+s[i]+str2+str5;
+		}
+	}
+	catch(SQLException &ex) 
+	{
+		cout << ex.what() << endl;
+
+	}
+	env->terminateConnection(conn); 
+	Environment::terminateEnvironment(env);
+	return sql;
+}*/
+
+
+void Insert_att(string tablename,string emptytablename,string filepath,string filepath2)
+{
+	cout<<"请输入需要插入的属性所在txt"<<endl;
+	string filepath3;
+	cin>>filepath3;
+	//filepath3="D://att2.txt";
+	cout<<"请输入插入的属性flag的文件地址"<<endl;
+	string filepath4;
+	cin>>filepath4;
+	//filepath4="D://flag2.txt";
+
+	fstream read;     
+	read.open(filepath3.c_str());
+	string temp;
+	vector <string> s;
+	int uiColumnNum1=0;
+	while(getline(read,temp)){
+		s.push_back(temp);
+		uiColumnNum1++;
+		}	
+	read.close();
+	
+
+	read.open(filepath4.c_str());
+	vector <char> C;
+	char c;int num=0;
+	while(!read.eof()){   
+	    if( (c=read.get())!='\t'){         
+			C.push_back(c);
+			num++;
+		}
+	}
+	read.close();
+	
+	
+    ofstream out;
+	out.open(filepath.c_str(),ios::app);
+	if(!out)return;
+	out<<endl;
+	for(int i=0;i<uiColumnNum1;i++)out<<s[i]<<endl;
+	out.close();
+	
+	
+	out.open(filepath2.c_str(),ios::app);
+	if(!out)return;
+	for(int i=0;i<num;i++)  if( C[i]!='\t'&& C[i]!='  ') out<<C[i];
+	//out<<C[num-1];
+	out.close();
+	
+
+    
+	
+	
+}
+
+
+
+string CreateYuanshishuju2(string tablename)
+{
+        
+		int uiColumnNum=0;
+		int uiColumnNum3=0;
+		fstream read1;
+		fstream read3;
+		vector <string> s;
+		vector <string>	sss;
+		vector <string> m_losttag;
+		string sss_temp;
+		vector <string>	ss;
+		string filepath,filepath2,filepath3;
+		string date;
+		cout<<"日期(eg:201505): "<<endl;
+		cin>>date;
+		string emptytablename="UNI_"+date+"_4G";
+		int date_int;
+		date_int=atoi(date.c_str());
+		
+		vector <string> Tablename;
+		Tablename.push_back(tablename);
+		string t_name;int t_num=1;
+		cout<<"是否涉及其他表？Y/N"<<endl;
+		char tt;cin>>tt;
+		while(tt=='Y'){
+		cout<<"请输入表名"<<endl;
+		cin>>t_name;Tablename.push_back(t_name);t_num++;
+		cout<<"还要继续么？Y/N"<<endl;
+	    cin>>tt;		
+		}
+
+
+        cout<<"请输入记录uni基础属性的文件地址"<<endl;
+		//filepath="D://att1.txt";
+		cin>>filepath;
+		cout<<"请输入uni基础属性flag的文件地址"<<endl;
+		//filepath2="D://flag1.txt";
+		cin>>filepath2; 
+		cout<<"请输入yuanshishuju属性的文件地址"<<endl;
+		//filepath3="D://att3.txt";
+		cin>>filepath3; 
+
+		/*
+        cout<<"添加其他属性到原始表中么？Y/N"<<endl;
+		char t;cin>>t;
+		while(t=='Y'){
+			//cout<<"请输入来源表名"<<endl;
+			//cin>>t_name;Tablename.push_back(t_name);t_num++;
+			Insert_att(t_name,emptytablename,filepath,filepath2);
+			cout<<"还要继续添加属性文件么？Y/N"<<endl;
+			cin>>t;			
+		}*/
+		
+		
+		read1.open(filepath.c_str());
+		string temp;
+		while(getline(read1,temp))
+	    {
+	    	if((temp[0]>0)&&(temp!="\n")){
+			s.push_back(temp);
+			uiColumnNum++;
+			}
+
+		}
+		read1.close();
+		//for(int j=0;j<uiColumnNum;j++)cout<<s[j]<<endl;
+		//cout<<uiColumnNum;
+		//cout<<endl<<endl;
+		
+		string sql;
+		int j;
+		string name1,name2;
+		int date_temp;
+		string date_str;
+		
+
+
+		string str1="CREATE TABLE ",str2=" AS (SELECT ",str3=" from ",str4=")",str5=",";
+		for(j=0;j<uiColumnNum;j++)
+		{
+			if(j==0){
+			    sql=sql+str1+emptytablename+str2+tablename+"."+s[j]+str5;
+				sss_temp=s[j];sss.push_back(sss_temp);
+				sql=sql+"("+tablename+".user_id-mod("+tablename+".user_id,10))/10 as ID_1,mod("+tablename+".user_id,10) as ID_2,";
+			    sss_temp="ID_1";sss.push_back(sss_temp);
+				sss_temp="ID_2";sss.push_back(sss_temp);
+			}
+			else if(s[j].substr(0,15)=="NOT_PACKAGE_USE") {sql=sql+s[j]+"_"+date+"_"+date+str5;sss_temp=s[j]+"_"+date+"_"+date;sss.push_back(sss_temp);}
+			else if(s[j].substr(0,8)=="LOST_TAG") {for(int k1=0;k1<6;k1++) {stringstream abcd; date_temp=date_int-3+k1;  abcd<<date_temp; abcd>>date_str; sql=sql+s[j]+"_"+date_str+str5; sss_temp=s[j]+"_"+date_str;sss.push_back(sss_temp);m_losttag.push_back(sss_temp);}}
+			else if(s[j].substr(0,18)=="USER_STATE_CODESET") 
+			{
+			 stringstream abcd2;
+			 date_temp=date_int-1;
+			 abcd2<<date_temp; 
+			 abcd2>>date_str;
+			 sql=sql+s[j]+"_"+date_str+"28"+str5;
+			 sss_temp=s[j]+"_"+date_str+"28";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"01"+str5; 
+			 sss_temp=s[j]+"_"+date+"01";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"23"; ///??????????????????? no str5
+			 sss_temp=s[j]+"_"+date+"23";sss.push_back(sss_temp);
+			}
+			else if(s[j].substr(0,3)!="ID_") {sql=sql+s[j]+"_"+date+str5; sss_temp=s[j]+"_"+date;sss.push_back(sss_temp);}
+            
+			if(j==uiColumnNum-1){
+				for(int i=0;i<t_num;i++){
+					if(i==t_num-1)name1=name1+Tablename[i];
+					else if(i<t_num-2){
+						name1=name1+Tablename[i]+',';
+						name2=name2+Tablename[0]+".user_id="+Tablename[i+1]+".user_id and ";
+				        }
+					else{
+						name1=name1+Tablename[i]+',';
+					   	name2=name2+Tablename[0]+".user_id="+Tablename[i+1]+".user_id";
+				           	}
+				            }
+			      if(t_num!=1)sql=sql+str3+name1+" where "+name2+str4+";";
+			      else if(t_num==1)sql=sql+str3+name1+str4+";";
+			                        }
+			
+		}
+	    
+
+		int uiColumnNum_final;
+		uiColumnNum_final=sss.size();
+		string att;
+		for(int jj=0; jj<uiColumnNum_final;jj++){att=att+sss[jj]+'\n'; }
+		ofstream out3;
+	    out3.open("D://att_final.txt");
+	    out3<<att;
+	    out3.close();
+
+		
+		string str6=" UPDATE ",str7=" SET ",str8=" =0 where ",str9=" IS NULL;";
+	
+
+		
+		fstream read;
+		vector <char> C;
+		read.open(filepath2.c_str());
+		char c;
+		int num=0;
+		while(!read.eof())
+		{   
+			if((c=read.get())!='/t')
+			{
+			C.push_back(c);
+			num++;
+			
+			}
+		}
+		read.close();
+		
+		//cout<<num<<endl;
+	   // for(int e=0; e<num;e++) cout<<e<<" ******** "<<C[e]<<endl;//" ******** "<<s[e]<<
+
+
+			for(int j=0;j<uiColumnNum_final;j++) 
+			{   if(sss[j].substr(0,12)=="EPARCHY_TYPE")
+					{sql=sql+str6+emptytablename+str7+sss[j]+" ="+sss[j]+"-1;";}
+		   		if(C[j]=='5')
+				
+		    		{
+		    		sql=sql+str6+emptytablename+str7+sss[j]+" =-1 where "+sss[j]+"=0;";
+					}
+				if(C[j]=='0')
+				
+				    {
+					
+					if(sss[j].substr(0,18)=="USER_STATE_CODESET")
+						{
+							sql=sql+"update "+emptytablename+ " set "+ sss[j]+" = "+"'3'  "+ " where " +sss[j]+" = "+"'2';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'2'  "+ " where " +sss[j]+" = "+"'4';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'4'  "+ " where " +sss[j]+" = "+"'6';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'7'  "+ " where " +sss[j]+" = "+"'7';"+
+		                    "update "+emptytablename+ " set "+ sss[j]+" = "+"'5'  "+ " where " +sss[j]+" = "+"'5';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'6'  "+ " where " +sss[j]+" = "+"'9';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'2'  "+ " where " +sss[j]+" = "+"'A';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'3'  "+ " where " +sss[j]+" = "+"'B';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'4'  "+ " where " +sss[j]+" = "+"'F';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'2'  "+ " where " +sss[j]+" = "+"'K';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'5'  "+ " where " +sss[j]+" = "+"'N';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'5'  "+ " where " +sss[j]+" = "+"'O';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'5'  "+ " where " +sss[j]+" = "+"'T';"+
+					        "update "+emptytablename+ " set "+ sss[j]+" = "+"'6'  "+ " where " +sss[j]+" = "+"'U';";
+						}
+					 
+					}
+			
+			}
+            
+			//LOST_TAG_date_T2_4G-------------vector<string> m_losttag;
+			
+			sql=sql+" alter table "+emptytablename+" add lost_tag_"+date+"_t2_4g number;";
+            sql=sql+" update "+emptytablename+" set lost_tag_"+date+"_t2_4g=-1;";
+			sql=sql+" update "+emptytablename+" set lost_tag_"+date+"_t2_4g=0 where ";
+			sql=sql+"("
+			+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0);";
+
+            sql=sql+" update "+emptytablename+" set lost_tag_"+date+"_t2_4g=1 where ";
+			sql=sql+"("
+			+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1);";
+
+		
+		
+		read3.open(filepath3.c_str());
+		string temp3;
+		while(getline(read3,temp3))
+	    {
+	    	if((temp3[0]>0)&&(temp3!="\n")){
+				if(temp3=="NOT_PACKAGE_USE") {temp3=temp3+"_"+date+"_"+date; ss.push_back(temp3);}
+				else if(temp3=="USER_ID" || temp3=="ID_1" || temp3=="ID_2") ss.push_back(temp3);
+				else if(temp3=="USER_STATE_CODESET")
+				{ 
+			     stringstream abcd3;
+			     date_temp=date_int-1;
+			     abcd3<<date_temp; 
+			     abcd3>>date_str;
+			     temp3="USER_STATE_CODESET_"+date_str+"28";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"01";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"23";ss.push_back(temp3);
+				}
+				
+				else if(temp3=="LOST_TAG"){temp3=temp3+"_"+date+"_T2_4G";ss.push_back(temp3);}
+				else {temp3=temp3+"_"+date;ss.push_back(temp3);}
+			
+			}
+
+		}
+		read3.close();
+		
+		uiColumnNum3=ss.size();
+		string att3;
+		for(int jjj=0; jjj<uiColumnNum3;jjj++){att3=att3+ss[jjj]+'\n'; }
+		ofstream out4;
+	    out4.open("D://att3_final.txt");
+	    out4<<att3;
+	    out4.close();
+		
+
+		sql=sql+str1+" YUANSHISHUJU"+"_"+date+"  "+str2;
+		for(int j=0;j<uiColumnNum3;j++)
+		{
+			if(j==uiColumnNum3-1)
+			sql=sql+"To_number("+ss[j]+") as "+ss[j]+" from "+emptytablename+" WHERE " +ss[j] + "!=-1);";
+			else
+			sql=sql+"To_number("+ss[j]+") as "+ss[j]+",";
+		}
+	
+		sql=sql+" create table zz_"+date+" as select * from "+" YUANSHISHUJU"+"_"+date" where 1=2;";
+		sql=sql+" create table div_"+date+" as select * from "+"div where 1=2;";
+		
+		
+		ofstream out5;
+		out5.open("tablenames_sql.txt");
+
+
+	
+	ofstream out2;
+	out2.open("result1.txt");
+	out2<<sql;
+	out2.close();
+	cout<<"sql:"<<sql<<endl;
+	//SqlRun("result1.txt");
+	return sql;		
+		
+}
+
+
+
+
+
