@@ -1,0 +1,625 @@
+#include<stdio.h>
+#include <fstream>
+//#include  <io.h>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <string.h>
+#include <algorithm>
+#include <vector>
+#include <math.h>
+#include "malloc.h"
+#include<ctime>
+#include <omp.h>
+//#include <occi.h>
+#include <sstream>
+#include<time.h>
+#include <cstdlib>
+//#include <stringstream>
+//#define ptablename "YUANSHISHUJU"
+//#define tablename1 "TABLE2"
+//#define tablename2 "TABLE_SORT2"
+#define GET_ARRAY_LEN(array,len) {len = (sizeof(array) / sizeof(array[0]));}
+using namespace std;
+//using namespace oracle::occi;
+
+
+
+
+
+template <class T>
+int getArrayLen(T& array)
+{
+	return (sizeof(array) / sizeof(array[0]));
+}
+
+
+
+//直接创建yuanshishuju
+string CreateYuanshishuju2(string tablename,string t_name,string tb_predict,string date);
+
+//执行sql语句
+void SqlRun(string filepath);
+
+//int main(int argc, char* argv[]){
+int main(){  
+	fstream _file;
+	_file.open("./out.txt");
+	if(_file){
+		_file.close();
+		system("rm out.txt");//删除out文件
+	}
+	fstream _file2;
+	_file2.open("./tablename.txt");
+	if(_file2){
+		_file2.close();
+		system("rm tablename.txt");//删除tablename文件
+	}
+	fstream _file3;
+	_file3.open("./out_drop.txt");
+	if(_file3){
+		_file3.close();
+		system("rm out_drop.txt");//删除out_drop文件
+	}
+	fstream _file4;
+	_file4.open("./out_predict.txt");
+	if(_file4){
+		_file4.close();
+		system("out_predict.txt");//删除out_predict文件
+	}
+	cout<<"已删除！"<<endl;
+
+
+	
+					string sql;
+					vector <string> tb;
+					
+					string tb1,tb2,tb3;
+
+					string tablename_mon_1,tablename_codeset_1,tb_predict_1,date_1; 
+					//tablename_mon_1=argv[1];tablename_codeset_1=argv[2];tb_predict_1=argv[3];date_1=argv[4];
+					tablename_mon_1="ASIAINFO_MON_QX_5_4G";tablename_codeset_1="ASIAINFO_USERSTCODESET_QX_4_4G";tb_predict_1="PREDICT_CREDIT5";date_1="201505";
+					
+
+					tb1="YUANSHISHUJU_"+date_1; 
+					tb3="ZZ_"+date_1;
+					tb2="DIV_TEST";
+					tb.push_back(tb1);tb.push_back(tb2);tb.push_back(tb3);
+					sql=sql+CreateYuanshishuju2(tablename_mon_1,tablename_codeset_1,tb_predict_1,date_1);
+					
+
+
+					string tablename_mon_2,tablename_codeset_2,date_2,tb_predict_2;     
+					tablename_mon_2="ASIAINFO_MON_QX_6_4G";tablename_codeset_2="ASIAINFO_USERSTCODESET_QX_5_4G";tb_predict_2="PREDICT_CREDIT6";date_2="201505";                                    
+					tb1="YUANSHISHUJU_"+date_2;
+					tb3="ZZ_"+date_2;
+					tb2="DIV_TEST";
+					tb.push_back(tb1);tb.push_back(tb2);tb.push_back(tb3);
+					sql=sql+CreateYuanshishuju2(tablename_mon_2,tablename_codeset_2,tb_predict_2,date_2);
+					
+					
+					sql=sql+" create table div_test"" as select * from "+"div where 1=2;";
+					tb.push_back(tablename_codeset_2);
+					
+					ofstream out;
+					out.open("out.txt",ios::app);
+					out<<sql;
+					out.close();
+					ofstream out_new;
+					out_new.open("tablename.txt",ios::app);
+					for(int ii=0; ii<tb.size();ii++) out_new<<tb[ii]<<endl;
+					out_new.close();
+
+
+					/****************************************************************************/
+				/*	
+					cout<<"_predict"<<endl;
+
+					string sql_predict;
+					
+					sql_predict=sql_predict+"create table "+"PREDICT_"+date_1+" as(select substr(user_id,0,4) eparcy_code, substr(user_id,5,20) user_id, testresult,realtag from "+tb_predict_1+"); ";
+					sql_predict=sql_predict+"create table "+"PREDICT_"+date_2+" as(select substr(user_id,0,4) eparcy_code, substr(user_id,5,20) user_id, testresult,realtag from "+tb_predict_2+"); ";
+					ofstream out_predict;
+					out_predict.open("out_predict.txt",ios::app);
+					out_predict<<sql_predict;
+					out_predict.close();
+					*/
+					
+					/****************************************************************************/
+
+					string sql_drop;
+					vector <string> tb_drop;
+					string tb_temp;
+
+					
+					tb_temp="UNI_"+date_1+"_4G"; 
+					tb_drop.push_back(tb_temp);
+					tb_temp="YUANSHISHUJU_"+date_1; 
+					tb_drop.push_back(tb_temp);
+					tb_temp="ZZ_"+date_1; 
+					tb_drop.push_back(tb_temp);
+					
+					tb_temp="UNI_"+date_2+"_4G"; 
+					tb_drop.push_back(tb_temp);
+					tb_temp="YUANSHISHUJU_"+date_2; 
+					tb_drop.push_back(tb_temp);
+					tb_temp="ZZ_"+date_2; 
+					tb_drop.push_back(tb_temp);
+					
+          			tb_temp="DIV_TEST"; 
+					tb_drop.push_back(tb_temp);
+					int num_drop;num_drop=tb_drop.size();
+					int i_drop;
+					for(i_drop=0;i_drop<num_drop;i_drop++)
+					{sql_drop=sql_drop+"DROP TABLE "+tb_drop[i_drop]+" ; ";}
+
+					ofstream out_drop;
+					out_drop.open("out_drop.txt",ios::app);
+					out_drop<<sql_drop;
+					out_drop.close();
+
+				/**********************************************************************************/
+
+					
+/*
+					SqlRun("out_drop.txt");
+					SqlRun("out_predict.txt");
+					SqlRun("out.txt");
+	*/
+	//system("pause");
+
+	return 0;
+}
+
+
+//执行sql语句
+/*
+void SqlRun(string filepath)
+{
+Environment *env;    //env1,*env2,*env3,*env4,*env5,*env6;
+Connection *conn;    //conn1,*conn2,*conn3,*conn4,*conn5,*conn6;
+Statement *stmt;     //stmt1,*stmt2,*stmt3,*stmt4,*stmt5,*stmt6;
+ResultSet *rs;       //rs1,*rs2,*rs3,*rs4,*rs5,*rs6;
+string username = "ucr_zs_south";
+string password = "Zd_0918_Model";
+string connstring = "//132.121.86.53:1521/zdxmdb";
+string title="sysu_test_y";
+string temp;
+env = Environment::createEnvironment(); 
+conn = env->createConnection(username,password,connstring); 
+stmt = conn->createStatement();
+
+
+ifstream read;
+read.open(filepath.c_str());
+while(getline(read,temp,';'))
+{
+try
+{
+stmt->setSQL(temp);
+stmt->executeUpdate();
+cout<<temp<<endl;
+}
+catch(SQLException &ex)
+{
+cout <<ex.what()<< endl;
+continue;
+}
+}
+read.close();
+cout<<"SQL command run!!!"<<endl;
+conn->terminateStatement(stmt); 
+env->terminateConnection(conn); 
+Environment::terminateEnvironment(env);
+}
+*/
+
+
+string CreateYuanshishuju2(vector <string> tab,vector <string> flag,vector <string> s,vector <string> att2, string date)
+//vector <string> tab   记录tablename.txt变量
+//vector <string> flag  记录flag1.txt变量
+//vector <string> s     记录att1.txt变量
+//vector <string> att2  记录att2.txt变量
+//date 在emptytablename 和
+
+{ 
+	    string sql;//SQL语句
+		string emptytablename="UNI_"+date+"_4G";//UNI_表名 
+		string emptytablename2="YUANSHISHUJU_"+date;//YUANSHISHUJU_表名
+		int uiColumnNum=0;//记录att1.txt变量个数
+		int uiColumnNum2=0;//记录att2.txt变量个数
+        vector <string> m_losttag;//记录lost_tag的所有变量
+		string m_losttag_temp;//临时变量
+        int t_num=tab.size();//tablename.txt中表的个数
+		string name1,name2;//临时变量：处理where后表名部分sql代码的
+
+		string str1="CREATE TABLE ",str2=" AS (SELECT ",str3=" from ",str4=")",str5=",";
+		string str6=" UPDATE ",str7=" SET ",str8=" =0 where ",str9=" IS NULL;";
+		
+		
+		
+		
+		//fstream read1;
+		//fstream read3;
+		
+		//vector <string>	sss;
+		
+		//string sss_temp;
+		//vector <string>	ss;
+		//string filepath,filepath2,filepath3;
+		//string date;
+		//cout<<"再次输入，确认日期(eg:201505): "<<endl;
+		//cin>>date;
+		
+		//int date_int;
+		//date_int=atoi(date.c_str());
+
+
+		//vector <string> Tablename;
+		//Tablename.push_back(tablename);
+		//string t_name;
+		                             //暂时手工调整3个表=3
+		//cout<<"请输入用户状态编码表名"<<endl;
+		//cin>>t_name;
+		//Tablename.push_back(t_name);
+		//Tablename.push_back(tb_predict);
+		/*cout<<"是否涉及其他表？Y/N"<<endl;
+
+		char tt;cin>>tt;
+		while(tt=='Y'){
+		cout<<"请输入表名"<<endl;
+		cin>>t_name;Tablename.push_back(t_name);t_num++;
+		cout<<"还要继续添加其他表么？Y/N"<<endl;
+	    cin>>tt;		
+		}
+		*/
+
+        //cout<<"请输入记录uni基础属性的文件地址"<<endl;
+		//filepath="att1.txt";
+		//cin>>filepath;
+		//cout<<"请输入uni基础属性flag的文件地址"<<endl;
+		//filepath2="flag1.txt";
+		//cin>>filepath2; 
+		//cout<<"请输入yuanshishuju属性的文件地址"<<endl;
+		//filepath3="att3.txt";
+		//cin>>filepath3; 
+
+		
+		
+		/*
+		read1.open(filepath.c_str());
+		string temp;
+		while(getline(read1,temp))
+	    {
+	    	if((temp[0]>0)&&(temp!="\n")){
+			s.push_back(temp);
+			uiColumnNum++;
+			}
+
+		}
+		read1.close();
+		*/
+		
+		
+		//int j;
+		
+		//int date_temp;
+		//string date_str;
+		
+
+
+		
+		for(int j=0;j<uiColumnNum;j++)
+		{
+			{
+				if(j==0){
+			    sql=sql+str1+emptytablename+str2+tab[0]+"."+user_id+str5;
+				//sss_temp=s[j];sss.push_back(sss_temp);
+				sql=sql+"("+tab[0]+".user_id-mod("+tab[0]+".user_id,10))/10 as ID_1,mod("+tab[0]+".user_id,10) as ID_2,";
+				
+				
+				/*如果能做到输入的为  表明.变量名  ---可yuanshishuju变量怎么办？可以先生成一个“表明.变量名”再去掉.之前的字符
+				这样的话 att1是表明.变量名  att3是变量名
+				sql=sql+str1+emptytablename+str2+s[j]+str5;
+				sss_temp=s[j];sss.push_back(sss_temp);
+				sql=sql+"("+s[j]+"-mod("+s[j]+",10))/10 as ID_1,mod("+s[j]+",10) as ID_2,";
+				*/
+			   // sss_temp="ID_1";sss.push_back(sss_temp);
+				//sss_temp="ID_2";sss.push_back(sss_temp);
+			}
+			//else if(s[j].substr(0,10)=="TESTRESULT") {sql=sql+s[j]+str5; sss_temp=s[j];sss.push_back(sss_temp);}
+			//else if(s[j].substr(0,15)=="NOT_PACKAGE_USE") {sql=sql+s[j]+"_"+date+"_"+date+str5;sss_temp=s[j]+"_"+date+"_"+date;sss.push_back(sss_temp);}
+			
+			
+			/*else if(s[j].substr(0,18)=="USER_STATE_CODESET") 
+			{
+			 stringstream abcd2;
+			 date_temp=date_int-1;
+			 abcd2<<date_temp; 
+			 abcd2>>date_str;
+			 sql=sql+s[j]+"_"+date_str+"28"+str5;
+			 sss_temp=s[j]+"_"+date_str+"28";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"01"+str5; 
+			 sss_temp=s[j]+"_"+date+"01";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"22"+str5; 
+			 sss_temp=s[j]+"_"+date+"22";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"23"+str5; 
+			 sss_temp=s[j]+"_"+date+"23";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"24"+str5; 
+			 sss_temp=s[j]+"_"+date+"24";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"25"+str5; 
+			 sss_temp=s[j]+"_"+date+"25";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"26"+str5; 
+			 sss_temp=s[j]+"_"+date+"26";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"27"+str5; 
+			 sss_temp=s[j]+"_"+date+"27";sss.push_back(sss_temp);
+			 sql=sql+s[j]+"_"+date+"28"+str5; //att1.txt中USER_STATE_CODESET要放最后 无str5
+			 sss_temp=s[j]+"_"+date+"28";sss.push_back(sss_temp);
+			}*/
+
+
+			else if(j>3)//(s[j].substr(0,3)!="ID_") 
+			{
+				if(j==uiColumnNum-1) sql=sql+s[j]; //sss_temp=s[j];sss.push_back(sss_temp);
+				else sql=sql+s[j]+str5; //sss_temp=s[j];sss.push_back(sss_temp);
+			}
+		}
+			
+			
+			//要保证att1.txt里面的losttag是按升序排列的
+			//if(s[j].substr(0,8)=="LOST_TAG")  
+			if(s[j].find(".LOST_TAG") < s[j].length() )
+			{/*for(int k1=0;k1<6;k1++) 
+			{stringstream abcd; 
+			date_temp=date_int-3+k1;  
+			abcd<<date_temp; 
+			abcd>>date_str; 
+			//if(k1==5){sql=sql+s[j]+"_"+date_str;}
+			//else {sql=sql+s[j]+"_"+date_str+str5;}*/
+			m_losttag_temp=s[j];
+			//sss.push_back(sss_temp);
+			m_losttag.push_back(m_losttag_temp);
+			}
+		//}
+			//lost_tag旧规则，k1=6; 新规则 k1=7
+
+
+
+			/*暂时还没改动
+			需要一个新的txt，第一行必须记录tablename即asiainfo_mon_qx_5_4g这种表的名字。
+			所有的引用的表记录。
+			读入txt--用vector---记录t_num,最终有n个表t_num=n。
+			类比：read1.open(filepath.c_str());
+		          string temp;
+		          while(getline(read1,temp))
+	             {
+	    	      if((temp[0]>0)&&(temp!="\n")){
+			      s.push_back(temp);
+			      uiColumnNum++;
+			     }
+		         }
+		           read1.close();
+			在前面修改。这样函数最好是把树那部分操作给润楷。！！！！！！！！！！告诉师兄！！！！！！！！
+			*/
+			if(j==uiColumnNum-1){
+				for(int i=0;i<t_num;i++){
+					if(i==t_num-1)name1=name1+tab[i];
+					else if(i<t_num-2){
+						name1=name1+tab[i]+',';
+						name2=name2+tab[0]+".user_id="+tab[i+1]+".user_id and ";
+				        }
+					else{
+						name1=name1+tab[i]+',';
+					   	name2=name2+tab[0]+".user_id="+tab[i+1]+".user_id";
+				           	}
+				            }
+			      if(t_num!=1)sql=sql+str3+name1+" where "+name2+str4+";";
+			      else if(t_num==1)sql=sql+str3+name1+str4+";";
+			                        }
+			
+		}
+	    
+		//输出uni表的变量，其实并不需要了，最后考虑把这部分去掉
+		//不过后面用到了这里的计数，可以被替换的，最后还是要删去
+		
+		/*
+		int uiColumnNum_final;
+		uiColumnNum_final=sss.size();
+		string att;
+		for(int jj=0; jj<uiColumnNum_final;jj++){att=att+sss[jj]+'\n'; }
+		ofstream out3;
+	    out3.open("D://att_final.txt");
+	    out3<<att;
+	    out3.close();
+		*/
+		
+		
+	
+
+		//前3个000是预留的
+		/*fstream read;
+		vector <char> C;
+		read.open(filepath2.c_str());
+		char c;
+		int num=0;
+		while(!read.eof())
+		{   
+			if((c=read.get())!='/t')
+			{
+			C.push_back(c);
+			num++;
+			
+			}
+		}
+		read.close();
+		*/
+	
+            
+		
+			for(int j=0;j<uiColumnNum;j++) 
+			{  
+				//？？？？？？？？？？？？？？？？？？？？？？？？？为什么会有这个特例！！！！！问师兄
+				//if(sss[j].substr(0,12)=="EPARCHY_TYPE")
+				if(s[j].find("EPARCHY_TYPE") < s[j].length() )
+					{sql=sql+str6+emptytablename+str7+sss[j]+" ="+sss[j]+"-1;";}
+		   		if(flag[j]=='5')
+		    		{
+		    		sql=sql+str6+emptytablename+str7+s[j]+" =-1 where "+s[j]+"=0;";
+					}
+				if(flag[j]=='0')
+				
+				    {
+					
+					//if(sss[j].substr(0,18)=="USER_STATE_CODESET")//？？？？？？？？？如果没有使用两张有相同元素被调用的表，ok
+					if(s[j].find("USER_STATE_CODESET") < s[j].length() )
+						{
+							sql=sql+"update "+emptytablename+ " set "+ s[j]+" = "+"'3'  "+ " where " +s[j]+" = "+"'2';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'2'  "+ " where " +s[j]+" = "+"'4';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'4'  "+ " where " +s[j]+" = "+"'6';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'7'  "+ " where " +s[j]+" = "+"'7';"+
+		                    "update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'5';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'6'  "+ " where " +s[j]+" = "+"'9';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'2'  "+ " where " +s[j]+" = "+"'A';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'3'  "+ " where " +s[j]+" = "+"'B';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'4'  "+ " where " +s[j]+" = "+"'F';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'2'  "+ " where " +s[j]+" = "+"'K';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'N';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'O';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'T';"+
+					        "update "+emptytablename+ " set "+ s[j]+" = "+"'6'  "+ " where " +s[j]+" = "+"'U';"+
+							"update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'X';"+
+							"update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'M';"+
+							"update "+emptytablename+ " set "+ s[j]+" = "+"'5'  "+ " where " +s[j]+" = "+"'e';";
+							
+							
+							
+							
+							//依潼1223新补充
+						}
+					 
+					}
+			
+			}
+            
+			//LOST_TAG_date_T2_4G-------------vector<string> m_losttag;
+			
+
+			//至少原来的变量名包含大写的LOST_TAG
+			sql=sql+" alter table "+emptytablename+" add LOST_TAG_TOTAL number;";
+			//因为目前只有两个即 m_losttag.size()=2
+            sql=sql+" update "+emptytablename+" set LOST_TAG_TOTAL=-1;";
+			sql=sql+" update "+emptytablename+" set LOST_TAG_TOTAL=1 where ";
+			sql=sql+
+                "("+m_losttag[0]+"=1 and "+m_losttag[1]+"=0)"
+			+"or ("+m_losttag[0]+"=0 and "+m_losttag[1]+"=1)"
+			+"or ("+m_losttag[0]+"=1 and "+m_losttag[1]+"=1);";
+
+            sql=sql+" update "+emptytablename+" set LOST_TAG_TOTAL=0 where ";
+			
+			sql=sql+"("+m_losttag[0]+"=0 and "+m_losttag[1]+"=0);";
+		
+			
+			
+			
+			
+			
+			/*新旧规则----改前面的k1*/
+			/*旧规则*/
+			//暂时 att1.txt 必须包括6个lost_tag!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!具体怎么操作以及转化规则再议!!!!!!!!!!!!名字里的 T2 也是个问题
+			/*sql=sql+"("
+			+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0)"
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0);";
+
+            sql=sql+" update "+emptytablename+" set lost_tag_"+date+"_t2_4g=1 where ";
+			
+			sql=sql+"("
+			+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1)"
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1);";
+
+			*/
+
+
+
+			/*新规则
+			sql=sql+"("
+			+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=0)"
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=0);";
+			
+			sql=sql+" update "+emptytablename+" set lost_tag_"+date+"_t2_4g=1 where ";
+			
+			sql=sql
+			   +"("+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=1) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=1) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=0 and "+m_losttag[6]+"=1) "
+			+"or ("+m_losttag[0]+"=0 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1 and "+m_losttag[6]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=0 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1 and "+m_losttag[6]+"=0) "
+			+"or ("+m_losttag[0]+"=2 and "+m_losttag[1]+"=2 and "+m_losttag[2]+"=0 and "+m_losttag[3]+"=0 and "+m_losttag[4]+"=0 and "+m_losttag[5]+"=1 and "+m_losttag[6]+"=0);";
+			*/
+		
+		//att3.txt 是att1.txt的去掉表名，如果选择att1=att3 则需保证不会出现多个表均含相同的被调用属性
+		
+		/*read3.open(filepath3.c_str());
+		string temp3;
+		while(getline(read3,temp3))
+	    {
+	    	if((temp3[0]>0)&&(temp3!="\n")){
+				//if(temp3=="NOT_PACKAGE_USE") {temp3=temp3+"_"+date+"_"+date; ss.push_back(temp3);}
+				//else if(temp3=="USER_ID" || temp3=="ID_1" || temp3=="ID_2") ss.push_back(temp3);
+				//else if(temp3=="USER_STATE_CODESET")
+				{ 
+			     stringstream abcd3;
+			     date_temp=date_int-1;
+			     abcd3<<date_temp; 
+			     abcd3>>date_str;
+			     temp3="USER_STATE_CODESET_"+date_str+"28";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"01";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"22";ss.push_back(temp3);
+				 temp3="USER_STATE_CODESET_"+date+"23";ss.push_back(temp3);
+				 temp3="USER_STATE_CODESET_"+date+"24";ss.push_back(temp3);
+				 temp3="USER_STATE_CODESET_"+date+"25";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"26";ss.push_back(temp3);
+		    	 temp3="USER_STATE_CODESET_"+date+"27";ss.push_back(temp3);
+			     temp3="USER_STATE_CODESET_"+date+"28";ss.push_back(temp3);
+				}
+				//else if(temp3=="TESTRESULT"){ss.push_back(temp3);}
+				//if(temp3=="LOST_TAG"){temp3=temp3+"_"+date+"_T2_4G";ss.push_back(temp3);}
+					if(temp3.substr(0,8)!="LOST_TAG") {temp3=temp3;ss.push_back(temp3);}
+			
+			}
+
+		}*/
+		//new add
+		//string losttag;
+		//losttag="LOST_TAG_"+date+"_T2_4G";
+			
+		//read3.close();
+		
+		
+		/*string att3;
+		for(int jjj=0; jjj<uiColumnNum3;jjj++){att3=att3+ss[jjj]+'\n'; }
+		ofstream out4;
+	    out4.open("D://att3_final.txt");
+	    out4<<att3;
+	    out4.close();
+		*/
+        att2.push_back("LOST_TAG_TOTAL");
+		uiColumnNum2=att2.size();
+		sql=sql+str1+" "+emptytablename2+"  "+str2;
+		for(int j=0;j<uiColumnNum2;j++)
+		{
+			if(j==uiColumnNum2-1)
+			sql=sql+"To_number("+att2[j]+") as "+att2[j]+" from "+emptytablename+" WHERE " +att2[j] + "!=-1);";
+			else
+			sql=sql+"To_number("+att2[j]+") as "+att2[j]+",";
+		}
+	
+		sql=sql+" CREAT TABLE ZZ_"+date+" AS SELECT * FROM "+" "emptytablename2+" WHERE 1=2;";
+	
+	//cout<<"sql:"<<sql<<endl;
+	return sql;		
+		
+}
