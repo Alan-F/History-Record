@@ -1,0 +1,67 @@
+
+///获取表字段属性temp_test为表名
+MetaData custtab_metaData = conn->getMetaData("ASIAINFO_MON_QX_5_4G", MetaData::PTYPE_TABLE);
+
+vector <MetaData> listOfColumns = custtab_metaData.getVector(MetaData::ATTR_LIST_COLUMNS);
+unsigned   int   uiColumnNum   =   listOfColumns.size(); 
+printf( "字段数=%u\n ",   uiColumnNum); 
+
+for   (int i=0;   i <uiColumnNum;   i++) 
+{ 
+  MetaData   columnObj   =   listOfColumns[i]; 
+  cout<<"columnObj.getType():"<<columnObj.getType()<<endl;
+ 
+ // printf( "%d   列名：%s\n ",   i+1,   columnObj.getString(MetaData::ATTR_NAME).c_str()); 
+ 
+  //printf( "%d   类型：%d,\n ",   i+1,   columnObj.getInt(MetaData::ATTR_DATA_TYPE)/*,   getTypeString(columnObj.getInt(MetaData::ATTR_DATA_TYPE)).c_str()*/); 
+ // printf( "%d   大小：%d\n ",   i+1,   columnObj.getInt(MetaData::ATTR_DATA_SIZE)); 
+ // printf( "%d   精度：%d\n ",   i+1,   columnObj.getInt(MetaData::ATTR_PRECISION)); 
+ // printf( "%d   数值范围：%d\n ",   i+1,   columnObj.getInt(MetaData::ATTR_SCALE)); 
+  if(   columnObj.getBoolean(MetaData::ATTR_IS_NULL)   ) 
+  printf( "%d   允许为空\n ",   i+1); 
+  else 
+  printf( "%d   不允许为空\n ",   i+1); 
+  int nType = columnObj.getInt(MetaData::ATTR_DATA_TYPE);
+  switch (nType)
+  {
+  case SQLT_DAT:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is date\n"; 
+  break;
+  case SQLT_NUM:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is number\n"; 
+  break;
+  case SQLT_CHR:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is varchar2\n";
+  break;
+  case SQLT_STR:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is SQLT_STR\n";
+  break;
+  case SQLT_LNG:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is SQLT_LNG\n";
+  break;
+  case SQLT_BLOB:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is SQLT_BLOB\n";
+  break;
+  case SQLT_INT:
+  cout<<columnObj.getString(MetaData::ATTR_NAME).c_str()<<":is SQLT_INT\n";
+  break;
+ 
+  default:
+  break;
+  }
+} 
+
+
+
+/*
+/* Create a statement and associate it with a select clause */
+// string sqlStmt="ASIAINFO_MON_QX_5_4G";
+// Statement *stmt1=conn->createStatement(sqlStmt);
+ /* Execute the statement to obtain a ResultSet */
+// ResultSet *rset=stmt1->executeQuery();
+ /* Obtain the metadata about the select list */
+// vector<MetaData>cmd=rset->getColumnListMetaData();
+  /* The metadata is a column list and each element is a column metaData */
+// int dataType=cmd[i].getInt(MetaData::ATTR_DATA_TYPE);
+ //*/
+//read.close();
