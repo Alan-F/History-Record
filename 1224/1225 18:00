@@ -1,0 +1,27 @@
+/*
+string sql = "select * from ASIAINFO_MON_QX_5_4G";
+stmt->setSQL(sql);//准备SQL语句
+// 逐行获取表字段
+//ifstream read;
+//read.open(filepath.c_str());
+//while(getline(read,temp,';'))
+//{
+try
+{
+ rs =  stmt->executeQuery();//执行SQL语句，返回结果集
+ while (rs->next()) //取数据
+  {
+  cout<<rs->getString(1)<<""<<rs->getString(2)<<""<<rs->getInt(3)<<endl;
+          }
+/*cout<<temp<<endl;
+stmt->setSQL(temp);
+stmt->executeUpdate();
+cout<<temp<<endl;*/
+/*}
+catch(SQLException &ex)
+{ cout << " Error Number "<< ex.getErrorCode() << endl;
+  cout << ex.getMessage() << endl;
+//cout <<ex.what()<< endl;
+//continue;
+}
+//}
